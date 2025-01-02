@@ -1,0 +1,3 @@
+<template>
+  <up-button />
+</template>
