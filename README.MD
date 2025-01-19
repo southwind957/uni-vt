@@ -1,4 +1,4 @@
-# uni-ts-app
+# uni-vt
 
 本项目是一个使用TypeScript构建的uniapp应用，集成了数据加密解密、UI框架和HTTP请求封装等功能。该项目旨在提供一个结构清晰、易于维护且功能完备的开发框架，以加速uniapp应用的开发流程。
 
@@ -16,7 +16,7 @@
 - **开发工具**: Visual Studio Code
 - **框架**: uniapp
 - **加密库**: CryptoJS
-- **UI框架**: uview-plus
+- **UI框架**: wot-design-uni
 - **HTTP客户端**: uniapp内置请求方法
 
 ## 功能模块
@@ -44,7 +44,6 @@
    npm run dev:h5
    ```
 
-
 # 框架使用手册
 
 本框架基于uniapp+typescript，已配置接口加解密，公共的请求等基础配置。
@@ -57,7 +56,7 @@ typescript：[ts官网](https://www.typescriptlang.org/)
 
 vue3：[vue3官网](https://cn.vuejs.org/)
 
-uview-plus: [uview-plus](https://uiadmin.net/uview-plus/ '官方链接')
+wot-design-uni: [wot-design-uni](https://wot-design-uni.cn/component/watermark.html '官方链接')
 
 ## vscode编辑
 
