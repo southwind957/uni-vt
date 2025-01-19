@@ -1,34 +1,29 @@
 <template>
-  <view>
-    <up-popup :show="show" @close="close" mode="center">
-      <view>
-        <text>出淤泥而不染，濯清涟而不妖</text>
-      </view>
-    </up-popup>
-  </view>
+  <z-paging ref="paging" v-model="dataList" @query="queryList">
+    <view
+      class="h-[200rpx] flex items-center justify-center"
+      v-for="(item, index) in dataList"
+      :key="index"
+    >
+      <view class="item-title">{{ item?.title }}</view>
+    </view>
+  </z-paging>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getTest } from '@/api/test'
-import { onShow } from '@dcloudio/uni-app'
-import type { Test } from '@/types/test'
+const paging = ref(null)
+const dataList = ref<{ title: string; value: string }[]>([])
 
-// 创建响应式数据
-const show = ref(true)
-const imgList = ref<Test>()
-function close() {
-  show.value = false
+const queryList = (pageNo: number, pageSize: number) => {
+  console.log('pageNo', pageNo)
+  console.log('pageSize', pageSize)
+  // 循环十次
+  setTimeout(() => {
+    let data = new Array(20).fill({ title: '测试数据', value: '测试值' })
+    paging.value?.complete(data)
+  })
 }
-const getData = async () => {
-  const res = await getTest()
-  imgList.value = res.data
-  console.log('🚀 ~ getData ~ imgList.value :', imgList.value)
-}
-
-onShow(() => {
-  getData()
-})
 </script>
 
 <style lang="scss" scoped>
