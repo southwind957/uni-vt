@@ -1,6 +1,6 @@
 <template>
   <view class="flex">
-    <view class="color-red">{{ title }}</view>
+    <view class="color-blue">{{ title }}</view>
     <view class="title">{{ title }}</view>
     <wd-button type="success" @click="showPaging">主要按钮</wd-button>
   </view>

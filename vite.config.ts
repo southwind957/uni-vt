@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import Uni from '@dcloudio/vite-plugin-uni'
+import eslintPlugin from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
 export default async () => {
@@ -17,7 +18,11 @@ export default async () => {
             plugin.api.options.devToolsEnabled = false
           }
         }
-      }
+      },
+      eslintPlugin({
+        fix: true,
+        cache: false
+      })
     ],
     css: {
       preprocessorOptions: {

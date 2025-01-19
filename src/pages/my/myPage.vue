@@ -13,7 +13,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 const paging = ref(null)
-const dataList = ref<{ title: string; value: string }[]>([])
+
+interface DataItem {
+  title: string
+  value: string
+}
+
+const dataList = ref<DataItem[]>([])
 
 const queryList = (pageNo: number, pageSize: number) => {
   console.log('pageNo', pageNo)
