@@ -15,6 +15,10 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
+import useStore from '@/store/index'
+
+const { useSafeArea } = useStore()
+console.log('========>', useSafeArea.getSafeAreaTop)
 
 const title = ref('标记点')
 
