@@ -14,8 +14,8 @@
 <br />
     <br />
     <a href="https://gitee.com/southwind957/uni-vt.git">Gitee地址</a>
-    <!-- ·
-    <a href="https://github.com/shaojintian/Best_README_template/issues">GitHub地址</a> -->
+    ·
+    <a href="https://github.com/southwind957/uni-vt.git">GitHub地址</a>
     <!-- ·
     <a href="https://github.com/shaojintian/Best_README_template/issues">文档</a> -->
   </p>
