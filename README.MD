@@ -1,192 +1,143 @@
-# uni-vt
+<p align="center">
+  <a href="https://gitee.com/southwind957/uni-vt.git">
+    <img src="image/logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-本项目是一个使用TypeScript构建的uniapp应用，集成了数据加密解密、UI框架和HTTP请求封装等功能。该项目旨在提供一个结构清晰、易于维护且功能完备的开发框架，以加速uniapp应用的开发流程。
+  <h3 align="center">完全基于VUE3+VITE的uniapp模板</h3>
+  <p align="center">
+    大大缩短你花在项目构建的时间
+    <br />
+    uni-vt是一个基于uniapp+vite5+ts+vue3开发的uniapp快速启动模板。包含（mock、pinia、地图、scss、unocss等）。无需hbuilder x，不管你使用何种工具都可以快速启动。
+    <br />
+    uni是指uniapp，uni-vt基于uniapp，利用其跨平台特性为您提供更加高效的开发体验。VT是Vue3和Vite的首字母，我们希望通过Vue3和Vite来加速uniapp开发。让您更快的进入Vue3+uniapp的开发。
+    <br />
+<br />
+    <br />
+    <a href="https://gitee.com/southwind957/uni-vt.git">Gitee地址</a>
+    <!-- ·
+    <a href="https://github.com/shaojintian/Best_README_template/issues">GitHub地址</a> -->
+    <!-- ·
+    <a href="https://github.com/shaojintian/Best_README_template/issues">文档</a> -->
+  </p>
 
-## 项目特点
+</p>
+ 
+## 目录
 
-- **TypeScript**: 利用TypeScript的强类型特性，提高代码的可读性和可维护性。
-- **uniapp**: 基于uniapp框架，支持多端编译，一次开发，多平台运行。
-- **数据加密解密**: 实现了数据的安全传输，保护用户隐私和数据安全。
-- **UI框架**: 集成了一套响应式的UI框架，提供丰富的组件和界面元素。
-- **HTTP封装**: 对HTTP请求进行了封装，简化了API调用流程，提高了代码复用性。
+- [上手指南](#上手指南)
+  - [开发前的配置要求](#开发前的配置要求)
+  - [安装步骤](#安装步骤)
+  <!-- - [文件目录说明](#文件目录说明) -->
+- [开发的架构](#开发的架构)
+- [部署](#部署)
+- [使用到的框架](#使用到的框架)
+- [贡献者](#贡献者)
+  - [如何参与开源项目](#如何参与开源项目)
+- [版本控制](#版本控制)
+- [作者](#作者)
+- [鸣谢](#鸣谢)
 
-## 开发环境
+### 上手指南
 
-- **编程语言**: TypeScript
-- **开发工具**: Visual Studio Code
-- **框架**: uniapp
-- **加密库**: CryptoJS
-- **UI框架**: wot-design-uni
-- **HTTP客户端**: uniapp内置请求方法
+###### 开发前的配置要求
 
-## 功能模块
+1. 首先确定你已了解uniapp开发。
+2. 确定你已经了解VITE+Vue3开发。
+3. 确定你已经安装好Nodejs环境。
+4. 确定你已经安装好Git工具。
 
-1. **数据加密解密**
-   - 提供了数据加密和解密的功能，确保数据在传输过程中的安全。
-2. **UI框架**
-   - 集成了一套完整的UI组件库，支持自定义主题和样式。
-3. **HTTP请求封装**
-   - 对外提供了统一的HTTP请求接口，简化了API调用和错误处理。
+###### **安装步骤**
 
-## 安装指南
+1. 取代码仓库到本地
 
-1. 克隆项目到本地：
-   ```bash
-   git clone https://gitee.com/southwind957/uni-ts-app.git
-   ```
-2. 进入项目目录并安装依赖：
-   ```bash
-   cd uni-ts-app
-   npm install
-   ```
-3. 启动开发服务器：
-   ```bash
-   npm run dev:h5
-   ```
-
-# 框架使用手册
-
-本框架基于uniapp+typescript，已配置接口加解密，公共的请求等基础配置。
-
-## 技术文档
-
-uniapp：[uniapp官方网站](https://uniapp.dcloud.net.cn/quickstart.html)
-
-typescript：[ts官网](https://www.typescriptlang.org/)
-
-vue3：[vue3官网](https://cn.vuejs.org/)
-
-wot-design-uni: [wot-design-uni](https://wot-design-uni.cn/component/watermark.html '官方链接')
-
-## vscode编辑
-
-在开始编码之前，需配置vscode，其余配置已经写在工作区，可在.vscode文件夹中查看，配置如下：
-
-```json
-{
-  "editor.formatOnSave": true,
-  "editor.tabSize": 2
-}
+```sh
+git clone https://gitee.com/southwind957/uni-vt.git
 ```
 
-有工作区文档之后需要安装插件用于提示uniapp特有标签：
+2. 使用pnpm安装依赖
 
-![1721370593450](image/README/1721370593450.png)
-
-此外还需下载prettier插件用于规范语法。插件下载之后即可正常使用
-
-## 编码规范
-
-### 请求发送
-
-本项目采用自行封装的方法来进行请求访问，请求已封装如下：
-
-```typescript
-/**
- * @description: 网络请求
- * @param {netWork} params
- * @return {Promise}
- */
-const request = (params: netWork): Promise<Response> => {
-  const config = requestInterceptor(params)
-  return new Promise((resolve, reject) => {
-    uni.request({
-      ...config,
-      success: (res) => {
-        resolve(responseInterceptor(res))
-      },
-      fail: (err) => {
-        reject(err)
-      }
-    })
-  })
-}
+```sh
+pnpm install
 ```
 
-若要新建请求，在api文件夹新增自己的api文件，采用如下风格进行编码：
+3. 使用vite开发模式运行项目
 
-```typescript
-import request from '@/common/request'
-
-interface Response {
-  data: string | AnyObject | ArrayBuffer
-}
-export const getTest = (params: netWork): Promise<Response> => {
-  return request({
-    url: '/test',
-    method: 'GET',
-    data: params
-  })
-}
+```sh
+pnpm dev:mp-weixin
 ```
 
-在页面中引入封装的api之后，使用如下代码即可获取到数据：
+<!-- ### 文件目录说明
+eg:
 
-```typescript
-const data = ref({})
-
-async function getData(): Promise<void> {
-  const res = await getTest({ name: 'test' })
-  console.log(res)
-  data.value = res.data
-}
 ```
+filetree
+├── ARCHITECTURE.md
+├── LICENSE.txt
+├── README.md
+├── /account/
+├── /bbs/
+├── /docs/
+│  ├── /rules/
+│  │  ├── backend.txt
+│  │  └── frontend.txt
+├── manage.py
+├── /oa/
+├── /static/
+├── /templates/
+├── useless.md
+└── /util/
 
-若需要传不传参数的请求，请如下配置(后续可能会优化，统一写在api文件方便修改)：
+``` -->
 
-```typescript
-export const getTest = (): Promise<Response> => {
-  return request({
-    url: '/imgs',
-    method: 'GET',
-    data: {}
-  })
-}
-```
+### 开发的架构
 
-项目已配置prettier和eslint，若出错代码是不能运行的，其他规范遵循这些规则就好。
+使用Vite+uniapp+vue3开发。
 
-## 接口加密
+### 使用到的框架
 
-### 加密开关
+- [Uniapp](https://uniapp.dcloud.io/quickstart)
+- [Vite](https://cn.vitejs.dev/)
+- [Vue3](https://v3.vuejs.org/)
+- [Pinia](https://pinia.vuejs.org/)
+- [UnoCSS](https://github.com/unocss/unocss)
+- [wot-design-uni](https://wot-design-uni.cn/guide/introduction.html)
 
-在文件的.env.production文件有如下代码：
+### 贡献者
 
-```shell
-VITE_APP_ENCRYPTION_DISABLE = 1
-```
+## 贡献者们
 
-将此代码注释或者置为0即可关闭接口加密。数据加密无需特别处理，若后端没有加密这取消此项，若后端进行加密就把加密打开。
+感谢给uni-vt贡献过代码的 [开发者](https://gitee.com/southwind957/uni-vt/repository/stats/master)。
 
-### 配置加密白名单
+#### 如何参与开源项目
 
-在当前目录的src/common/config文件中，有代码如下：
+贡献使开源社区成为一个学习、激励和创造的绝佳场所。你所作的任何贡献都是**非常感谢**的。
 
-```typescript
-// 加密白名单
-export const whiteList = ['/login']
-```
+1. Fork仓库
+2. 建立分支(`git checkout -b feature/AmazingFeature`)
+3. 提交修改(`git commit -m 'Add some AmazingFeature'`)
+4. 推送分支(`git push origin feature/AmazingFeature`)
+5. 提交[pull request](https://gitee.com/southwind957/uni-vt/pulls)
 
-只需要在该数组中添加白名单地址即可不加密放行。
+#### 加入我们
 
-## 项目运行
+维护一个开源项目需要花费时间与精力，尤其是uniapp需要兼容不同的平台，这更是一项庞大的工作，因此衷心希望有一群志同道合的朋友加入我们。如果您希望加入我们，请发送邮件至921013871@qq.com或者直接添加同名QQ好友。我们一起维护这个uni-vt，让它变得更好。
 
-详见根目录package.json文件，执行
+### 版本控制
 
-1. 安装依赖 `npm i`
-2. 本地运行 `npm run dev:x`
-3. 构建运行 `npm run build:x`
+该项目使用Git进行版本管理。您可以在repository参看当前版本。
 
-## 常见问题解决
+### 作者
 
-### TypeScript引用模块报红问题
+921013871@qq.com &ensp; 张佳佳
 
-在ts中，引用的模块存在还是会有红线错误提示，不影响使用，想关闭走如下步骤：
+抖音:uni-vt &ensp; qq:921013871
 
-1. 查看报错模块名称
-2. 在env.d.ts加入如下定义（假如是引用加密相关报错），即可解决TypeScript引用报红问题。
+_您也可以在贡献者名单中参看所有参与该项目的开发者。_
 
-```typescript
-declare module 'crypto-js'
-declare module 'crypto-js/tripledes'
-```
+### 版权说明
+
+该项目签署了MIT License 授权许可，详情请参阅 [LICENSE.txt](http://www.apache.org/licenses/LICENSE-2.0)
+
+### 鸣谢
+
+- [wot-design-uni](https://wot-design-uni.cn/guide/introduction.html) 感谢wot-desgin-uni团队，提供各种各样的组件库，让我们能站在巨人的肩膀上，更快的开发项目。
