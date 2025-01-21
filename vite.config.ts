@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite'
+import { defineConfig, UserConfig } from 'vite'
 import Uni from '@dcloudio/vite-plugin-uni'
 import eslintPlugin from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
-export default async () => {
+export default async (): Promise<UserConfig> => {
   const UnoCss = await import('unocss/vite').then((i) => i.default)
   return defineConfig({
     plugins: [

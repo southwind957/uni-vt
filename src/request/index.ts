@@ -4,7 +4,6 @@ import { encrypt, decrypt } from './crypto'
 import { isEmpty, isWhiteList } from '@/utils/others'
 
 const baseUrl = import.meta.env.VITE_APP_URL
-// const env = import.meta.env.VITE_APP_ENV
 
 // 请求拦截器
 const requestInterceptor = (params: netWork): netWork => {

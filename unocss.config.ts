@@ -3,12 +3,19 @@ import {
   transformerAttributify,
   transformerClass
 } from 'unocss-preset-weapp/transformer'
-import { defineConfig } from 'unocss'
+import { defineConfig, presetIcons } from 'unocss'
 
 export default defineConfig({
   presets: [
-    // https://github.com/MellowCo/unocss-preset-weapp
-    presetWeapp()
+    presetWeapp(),
+    // 按需引入
+    presetIcons({
+      // 更多的图标在下面加入即可
+      collections: {
+        carbon: () =>
+          import('@iconify-json/carbon/icons.json').then((i) => i.default)
+      }
+    })
   ],
   shortcuts: [
     {

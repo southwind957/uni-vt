@@ -3,6 +3,10 @@ import App from './App.vue'
 import 'uno.css'
 import * as Pinia from 'pinia'
 import { createUnistorage } from 'pinia-plugin-unistorage'
+import Mock from './mock'
+
+const mockEnable = import.meta.env.VITE_MOCK === 'true'
+const mockUse = mockEnable ? Mock : undefined
 
 export function createApp() {
   const app = createSSRApp(App)
@@ -10,6 +14,7 @@ export function createApp() {
   store.use(createUnistorage())
   app.use(store)
   return {
-    app
+    app,
+    mockUse
   }
 }
