@@ -4,6 +4,7 @@
     <view class="title">{{ title }}</view>
     <wd-button type="success" @click="showPaging">主要按钮</wd-button>
   </view>
+  <wd-button type="success" @click="show = true">弹出层</wd-button>
   <!-- 图标预设 -->
   <view class="i-carbon-sun dark:i-carbon-moon color-blue mb-20rpx"></view>
   <wd-icon name="add-circle" />
@@ -22,23 +23,40 @@
   >
     <template #display="slotData">
       <view
-        class="w-[100%] mb-10rpx"
+        class="w-[94%] mb-10rpx rounded-14rpx shadow-[0px_0px_0px_0.1px_rgba(0,0,0,0.5)] p-10rpx"
         v-for="(item, index) in slotData.Idata"
         :key="index"
       >
         <image class="w-[100%] rounded-14rpx" :src="item.url" mode="widthFix" />
-        <view class="text-left">{{ item.content }}</view>
+        <view>
+          <view class="flex items-center space-x-4">
+            <wd-img :width="30" :height="30" round :src="item.avator" />
+            <view class="mt-10rpx">{{ item.name }}</view>
+          </view>
+          <view class="text-left">{{ item.content }}</view>
+        </view>
       </view>
     </template>
   </Waterfall>
+  <Popup :show="show" @click="show = false" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { onShow } from '@dcloudio/uni-app'
+import { onLoad } from '@dcloudio/uni-app'
 import useStore from '@/store/index'
 import { getWaterfall } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
+// 引入弹出层
+import Popup from '@/components/Popup/popopComponent.vue'
+
+interface IWaterfall {
+  id: number
+  url: string
+  avator: string
+  name: string
+  content: string
+}
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -48,11 +66,14 @@ const title = ref('uni-vt')
 // 瀑布流的数据
 const waterfallData = ref<IWaterfall[]>([])
 
+// 弹出层
+const show = ref<boolean>(false)
+
 function showPaging() {
   uni.navigateTo({ url: '/pages/my/myPage' })
 }
 
-onShow(async () => {
+onLoad(async () => {
   const res = await getWaterfall<IWaterfall>()
   waterfallData.value = res.data.items
 })
