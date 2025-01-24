@@ -15,6 +15,6 @@ interface IResponse<T = any> {
 
 // 列表参数
 interface IList<T> {
-  list: T[]
+  items: T[]
   total: number
 }

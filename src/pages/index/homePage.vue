@@ -13,24 +13,48 @@
   <wd-tag custom-class="space" type="warning">标签</wd-tag>
   <wd-tag custom-class="space" type="success">标签</wd-tag>
   <wd-watermark content="uni-vt" :width="130" :height="130"></wd-watermark>
+  <!-- 瀑布流 -->
+  <Waterfall
+    class="mt-20rpx w-[96%] mx-auto"
+    :data="waterfallData"
+    :gap="10"
+    v-if="waterfallData.length > 0"
+  >
+    <template #display="slotData">
+      <view
+        class="w-[100%] mb-10rpx"
+        v-for="(item, index) in slotData.Idata"
+        :key="index"
+      >
+        <image class="w-[100%] rounded-14rpx" :src="item.url" mode="widthFix" />
+        <view class="text-left">{{ item.content }}</view>
+      </view>
+    </template>
+  </Waterfall>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 import useStore from '@/store/index'
-import { TestMock } from '@/api/test'
+import { getWaterfall } from '@/api/test'
+// 引入瀑布流组件
+import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
 
-const title = ref('标记点')
+const title = ref('uni-vt')
+
+// 瀑布流的数据
+const waterfallData = ref<IWaterfall[]>([])
 
 function showPaging() {
   uni.navigateTo({ url: '/pages/my/myPage' })
 }
 
-onMounted(async () => {
-  const res = await TestMock<{ name: string }>()
-  title.value = res.data.name
+onShow(async () => {
+  const res = await getWaterfall<IWaterfall>()
+  waterfallData.value = res.data.items
 })
 </script>
 
