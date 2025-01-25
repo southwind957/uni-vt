@@ -4,7 +4,6 @@
     <view class="title">{{ title }}</view>
     <wd-button type="success" @click="showPaging">主要按钮</wd-button>
   </view>
-  <wd-button type="success" @click="show = true">弹出层</wd-button>
   <!-- 图标预设 -->
   <view class="i-carbon-sun dark:i-carbon-moon color-blue mb-20rpx"></view>
   <wd-icon name="add-circle" />
@@ -38,7 +37,6 @@
       </view>
     </template>
   </Waterfall>
-  <Popup :show="show" @click="show = false" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -47,16 +45,6 @@ import useStore from '@/store/index'
 import { getWaterfall } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
-// 引入弹出层
-import Popup from '@/components/Popup/popopComponent.vue'
-
-interface IWaterfall {
-  id: number
-  url: string
-  avator: string
-  name: string
-  content: string
-}
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -65,9 +53,6 @@ const title = ref('uni-vt')
 
 // 瀑布流的数据
 const waterfallData = ref<IWaterfall[]>([])
-
-// 弹出层
-const show = ref<boolean>(false)
 
 function showPaging() {
   uni.navigateTo({ url: '/pages/my/myPage' })
