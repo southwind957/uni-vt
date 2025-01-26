@@ -37,6 +37,7 @@
       </view>
     </template>
   </Waterfall>
+  <From class="mt-20rpx" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -45,6 +46,7 @@ import useStore from '@/store/index'
 import { getWaterfall } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
+import From from '@/components/Form/FormComponent.vue'
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)

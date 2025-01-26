@@ -1,16 +1,13 @@
 // 不需要登录的路由
-const whiteList = [
-  '/pages/mine/minePage',
-  '/pages/order/orderPage',
-  '/pages/index/homePage',
-  '/subPackages/rmMaster/pages/loginPage'
-]
+const whiteList = ['*']
 
-// 切换到师傅端时，清空缓存将islogin置空
-// 切换回用户端时，情况缓存将islogin置空
 function isPermission(path: string): boolean {
-  const isLogin = uni.getStorageSync('isLogin')
-  return isLogin || whiteList.indexOf(path) > -1
+  if (whiteList.includes('*')) {
+    return true
+  } else {
+    const isLogin = uni.getStorageSync('isLogin')
+    return isLogin || whiteList.indexOf(path) > -1
+  }
 }
 
 const navigateIntercetor = {
