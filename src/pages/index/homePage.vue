@@ -9,10 +9,19 @@
   <wd-icon name="add-circle" />
   <wd-tag custom-class="space">标签</wd-tag>
   <wd-tag custom-class="space" type="primary">标签</wd-tag>
-  <wd-tag custom-class="space" type="danger">标签</wd-tag>
-  <wd-tag custom-class="space" type="warning">标签</wd-tag>
-  <wd-tag custom-class="space" type="success">标签</wd-tag>
   <wd-watermark content="uni-vt" :width="130" :height="130"></wd-watermark>
+  <!-- 自定义钩子 -->
+  <view class="flex flex-col">
+    <view class="mt-10rpx">
+      <wd-button type="primary" @click="onInit">初始化</wd-button>
+      <wd-button type="primary" @click="onSet">设置</wd-button>
+      <wd-button type="primary" @click="onGet">获取</wd-button>
+    </view>
+    <view>
+      表单数据
+      <view>{{ formData }}</view>
+    </view>
+  </view>
   <!-- 瀑布流 -->
   <Waterfall
     class="mt-20rpx w-[96%] mx-auto"
@@ -40,13 +49,15 @@
   <From class="mt-20rpx" />
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import useStore from '@/store/index'
 import { getWaterfall } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 import From from '@/components/Form/FormComponent.vue'
+// 引入自定义hooks
+import { useForm } from '@/hooks/useForm'
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -55,6 +66,31 @@ const title = ref('uni-vt')
 
 // 瀑布流的数据
 const waterfallData = ref<IWaterfall[]>([])
+
+// 表单hooks
+type IFormData = {
+  name: string
+  password: string
+}
+
+const formData = computed(() => getFormData())
+
+const { initForm, setFormField, getFormData } = useForm<IFormData>()
+
+const onInit = () => {
+  initForm({
+    name: 'test',
+    password: '123456'
+  })
+}
+
+const onSet = () => {
+  setFormField('name', 'uni-vt')
+}
+
+const onGet = () => {
+  console.log('🚀 ~ onGet ~ getFormData():', getFormData())
+}
 
 function showPaging() {
   uni.navigateTo({ url: '/pages/my/myPage' })
