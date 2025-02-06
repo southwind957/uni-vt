@@ -1,2 +1,81 @@
 // 测试颜色
 $thme-color: red;
+// 字体
+$font-family: '微软雅黑';
+
+// 快速居中
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// flex 等分
+@mixin flex-equal {
+  display: flex;
+  justify-content: space-between;
+}
+
+// flex 换行等分
+@mixin flex-equal-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+// flex 垂直等分
+@mixin flex-equal-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+// 吸顶，传入参数当作z-index
+@mixin sticky-top($z-index: 9) {
+  position: sticky;
+  top: 0;
+  z-index: $z-index;
+}
+
+// 吸底
+@mixin sticky-bottom($z-index: 9) {
+  position: sticky;
+  bottom: 0;
+  z-index: $z-index;
+}
+
+// 固定定位吸顶
+@mixin fixed-top($z-index: 9) {
+  position: fixed;
+  top: 0;
+  z-index: $z-index;
+}
+
+// 固定定位吸底
+@mixin fixed-bottom($z-index: 9) {
+  position: fixed;
+  bottom: 0;
+  z-index: $z-index;
+}
+
+// 使用dom自定义按钮
+@mixin btn-primary(
+  $bg-color: $thme-color,
+  $color: #fff,
+  $border-color: $thme-color,
+  $border-radius: 16rpx
+) {
+  background-color: $thme-color;
+  color: $color;
+  border: 1rpx solid $border-color;
+  border-radius: $border-radius;
+  @include flex-center;
+}
+
+// 字体相关
+@mixin font($size, $color, $font-weight: normal, $family: $font-family) {
+  font-size: $size;
+  color: $color;
+  font-weight: $font-weight;
+  font-family: $family;
+}
