@@ -5,12 +5,12 @@ interface ValidateRule<T = any> {
   pattern?: RegExp
 }
 
-type checkEnum = 'Defalut' | 'RegExp' | 'Function'
+type checkEnum = 'RegExp' | 'Function'
 
 interface RuleOptions {
-  message: string
+  message?: string
   validator?: (value: any) => boolean | Promise<boolean>
   pattern?: RegExp
-  checkType: checkEnum
+  checkType?: checkEnum
   field: string
 }

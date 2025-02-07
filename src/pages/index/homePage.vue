@@ -46,7 +46,7 @@
       </view>
     </template>
   </Waterfall>
-  <From class="mt-20rpx" />
+  <From :rules="rules" class="mt-20rpx" />
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
@@ -58,6 +58,9 @@ import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 import From from '@/components/Form/FormComponent.vue'
 // 引入自定义hooks
 import { useForm } from '@/hooks/useForm'
+import { useValidateRule } from '@/hooks/useValidate'
+// 引入常用正则
+import * as pattern from '@/utils/pattern'
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -77,12 +80,25 @@ const formData = computed(() => getFormData())
 
 const { initForm, setFormField, getFormData } = useForm<IFormData>()
 
+// 规则钩子
+const { Rule } = useValidateRule()
+
 const onInit = () => {
   initForm({
     name: 'test',
     password: '123456'
   })
 }
+
+const rules = Rule([
+  { field: 'name' },
+  {
+    message: '请输入正确手机号',
+    checkType: 'RegExp',
+    field: 'phone',
+    pattern: pattern.mobileRegex
+  }
+])
 
 const onSet = () => {
   setFormField('name', 'uni-vt')

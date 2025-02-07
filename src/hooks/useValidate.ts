@@ -2,19 +2,21 @@
 export function useValidateRule() {
   // 闭包函数生成单个规则
   const generate = (options: RuleOptions): ValidateRule[] => {
-    switch (options.checkType) {
+    const type = options?.checkType ?? 'Defalut'
+    const message = options?.message ?? '该字段不允许为空'
+    switch (type) {
       case 'Defalut':
         return [
           {
             required: true,
-            message: options.message
+            message
           }
         ]
       case 'RegExp':
         return [
           {
             required: true,
-            message: options.message,
+            message,
             pattern: options.pattern
           }
         ]
@@ -22,7 +24,7 @@ export function useValidateRule() {
         return [
           {
             required: true,
-            message: options.message,
+            message,
             validator: options.validator
           }
         ]

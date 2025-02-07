@@ -1,25 +1,27 @@
 <template>
   <view>
-    <wd-form ref="form" :model="model">
+    <wd-form ref="form" :model="model" :rules="props.rules">
       <wd-cell-group border>
         <wd-input
-          label="用户名"
+          label="优惠券名称"
           label-width="100px"
-          prop="value1"
+          :maxlength="20"
+          show-word-limit
+          prop="couponName"
+          required
+          suffix-icon="warn-bold"
           clearable
-          v-model="model.value1"
-          placeholder="请输入用户名"
-          :rules="[{ required: true, message: '请填写用户名' }]"
+          v-model="model.name"
+          placeholder="请输入优惠券名称"
         />
         <wd-input
-          label="密码"
+          label="歪比巴卜"
           label-width="100px"
-          prop="value2"
-          show-password
+          prop="phone"
+          suffix-icon="camera"
+          placeholder="请输入歪比巴卜"
           clearable
-          v-model="model.value2"
-          placeholder="请输入密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
+          v-model="model.phone"
         />
       </wd-cell-group>
       <view class="footer">
@@ -35,19 +37,26 @@
 import { reactive, ref } from 'vue'
 
 // 动态接收参数，配合钩子进行数据控制
+const props = defineProps({
+  rules: {
+    type: Object,
+    required: true
+  }
+})
 // 统一使用规则
 // ...
 const model = reactive<{
-  value1: string
-  value2: string
+  name: string
+  phone: string
 }>({
-  value1: '',
-  value2: ''
+  name: '',
+  phone: ''
 })
 
 const form = ref()
 
 function handleSubmit() {
+  console.log('🚀 ~ handleSubmit ~ form.value:', form.value.validate)
   form.value
     .validate()
     .then(({ valid, errors }) => {
