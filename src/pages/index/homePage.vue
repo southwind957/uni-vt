@@ -46,7 +46,7 @@
       </view>
     </template>
   </Waterfall>
-  <From :rules="rules" class="mt-20rpx" />
+  <From :rules="rules" :formSchema="schema" class="mt-20rpx" />
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
@@ -82,6 +82,38 @@ const { initForm, setFormField, getFormData } = useForm<IFormData>()
 
 // 规则钩子
 const { Rule } = useValidateRule()
+
+// 表单结构
+const schema = ref<IFormSchema[]>([
+  {
+    field: 'name',
+    label: '用户名',
+    type: 'Input',
+    placeholder: '请输入用户名',
+    cell: '基础数据'
+  },
+  {
+    field: 'password',
+    label: '密码',
+    type: 'Input',
+    placeholder: '请输入密码',
+    cell: '基础数据'
+  },
+  {
+    field: 'phone',
+    label: '手机号',
+    type: 'Input',
+    placeholder: '请输入手机号',
+    cell: '扩展数据'
+  },
+  {
+    field: 'price',
+    label: '价格',
+    type: 'Number',
+    placeholder: '请输入价格',
+    cell: '扩展数据'
+  }
+])
 
 const onInit = () => {
   initForm({
