@@ -5,7 +5,8 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue'
+import { type PropType } from 'vue'
+import { groupBy } from '@/utils/others'
 
 // 动态接收参数，配合钩子进行数据控制
 const props = defineProps({
@@ -19,7 +20,7 @@ const props = defineProps({
   }
 })
 
-const schemaList = props.formSchema.groupby((item) => item.group)
+const schemaList = groupBy(props.formSchema, (item) => item.cell as string)
 console.log('🚀 ~ schemaList:', schemaList)
 </script>
 

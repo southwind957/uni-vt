@@ -6,3 +6,5 @@ type ToastType =
   | 'fail'
   | 'exception'
   | undefined
+
+type GroupByFunction<T, K> = (item: T) => K

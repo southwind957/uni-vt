@@ -23,3 +23,20 @@ export const isWhiteList = (whiteList: string[], path: string): boolean => {
     return path.indexOf(item) > -1
   })
 }
+
+export function groupBy<T, K extends string | number | symbol>(
+  array: T[],
+  keyFn: GroupByFunction<T, K>
+): Record<K, T[]> {
+  return array.reduce(
+    (result, item) => {
+      const key = keyFn(item)
+      if (!result[key]) {
+        result[key] = []
+      }
+      result[key].push(item)
+      return result
+    },
+    {} as Record<K, T[]>
+  )
+}
