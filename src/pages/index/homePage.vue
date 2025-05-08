@@ -46,7 +46,13 @@
       </view>
     </template>
   </Waterfall>
-  <From :rules="rules" :formSchema="schema" class="mt-20rpx" />
+  <From
+    :rules="rules"
+    :formSchema="schema"
+    class="mt-20rpx"
+    @register="register"
+    @submitForm="submitForm"
+  />
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
@@ -74,6 +80,8 @@ const waterfallData = ref<IWaterfall[]>([])
 type IFormData = {
   name: string
   password: string
+  phone: string
+  price: number
 }
 
 const formData = computed(() => getFormData())
@@ -95,7 +103,7 @@ const schema = ref<IFormSchema[]>([
   {
     field: 'password',
     label: '密码',
-    type: 'Input',
+    type: 'Password',
     placeholder: '请输入密码',
     cell: '基础数据'
   },
@@ -115,10 +123,24 @@ const schema = ref<IFormSchema[]>([
   }
 ])
 
+const register = (e: any) => {
+  console.log('🚀 ~ register ~ e:', e)
+  initForm(e)
+}
+
+const submitForm = (e: any) => {
+  for (const key in e) {
+    setFormField(key, e[key])
+  }
+  console.log(getFormData())
+}
+
 const onInit = () => {
   initForm({
     name: 'test',
-    password: '123456'
+    password: '123456',
+    phone: '12345678901',
+    price: 100
   })
 }
 

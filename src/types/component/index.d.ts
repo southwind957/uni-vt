@@ -1,4 +1,4 @@
-type IFormType = 'Number' | 'Input'
+type IFormType = 'Number' | 'Input' | 'Password'
 
 interface IFormSchema {
   label: string
