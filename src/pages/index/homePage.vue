@@ -17,6 +17,13 @@
       <wd-button type="primary" @click="onSet">设置</wd-button>
       <wd-button type="primary" @click="onGet">获取</wd-button>
       <wd-button open-type="share">分享给好友</wd-button>
+      <wd-button @click="handleMap">获取位置</wd-button>
+      <wd-button @click="handleTomap">导航到获取的位置</wd-button>
+    </view>
+    <view class="mb-10">
+      <view>当前位置：</view>
+      <view>经度：{{ longitude }}</view>
+      <view>纬度：{{ latitude }}</view>
     </view>
     <view>
       表单数据
@@ -75,6 +82,31 @@ const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
 
 const title = ref('uni-vt')
+
+const longitude = ref<number>(0)
+const latitude = ref<number>(0)
+
+const handleMap = () => {
+  uni.chooseLocation({
+    success: function (res) {
+      console.log('位置名称：' + res.name)
+      console.log('详细地址：' + res.address)
+      console.log('纬度：' + res.latitude)
+      console.log('经度：' + res.longitude)
+      longitude.value = res.longitude
+      latitude.value = res.latitude
+    }
+  })
+}
+
+const handleTomap = () => {
+  uni.openLocation({
+    longitude: Number(longitude.value),
+    latitude: Number(latitude.value),
+    name: '当前位置',
+    address: '详细地址'
+  })
+}
 
 // 瀑布流的数据
 const waterfallData = ref<IWaterfall[]>([])
