@@ -16,6 +16,7 @@
       <wd-button type="primary" @click="onInit">初始化</wd-button>
       <wd-button type="primary" @click="onSet">设置</wd-button>
       <wd-button type="primary" @click="onGet">获取</wd-button>
+      <wd-button open-type="share">分享给好友</wd-button>
     </view>
     <view>
       表单数据
@@ -67,6 +68,8 @@ import { useForm } from '@/hooks/useForm'
 import { useValidateRule } from '@/hooks/useValidate'
 // 引入常用正则
 import * as pattern from '@/utils/pattern'
+
+import { setShareConfig } from '@/hooks/useShare'
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -169,6 +172,11 @@ function showPaging() {
 onLoad(async () => {
   const res = await getWaterfall<IWaterfall>()
   waterfallData.value = res.data.items
+  setShareConfig({
+    title: '测试独立页面标题',
+    path: '/pages/index/homePage',
+    imageUrl: 'https://www.quazero.com/uploads/allimg/140303/1-140303215009.jpg'
+  })
 })
 </script>
 

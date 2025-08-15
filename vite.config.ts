@@ -34,7 +34,7 @@ export default async (): Promise<UserConfig> => {
       }
     },
     build: {
-      target: 'ES2024',
+      target: 'ES2015',
       terserOptions: {
         compress: {
           drop_console: true,
