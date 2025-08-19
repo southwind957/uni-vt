@@ -13,6 +13,7 @@
   <!-- 自定义钩子 -->
   <view class="flex flex-col">
     <view class="mt-10rpx">
+      <wd-button type="primary" @click="handleDownload">下载页面</wd-button>
       <wd-button type="primary" @click="onInit">初始化</wd-button>
       <wd-button type="primary" @click="onSet">设置</wd-button>
       <wd-button type="primary" @click="onGet">获取</wd-button>
@@ -161,6 +162,10 @@ const schema = ref<IFormSchema[]>([
 const register = (e: any) => {
   console.log('🚀 ~ register ~ e:', e)
   initForm(e)
+}
+
+const handleDownload = () => {
+  uni.navigateTo({ url: '/pages/test/testPage' })
 }
 
 const submitForm = (e: any) => {

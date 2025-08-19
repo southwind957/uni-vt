@@ -61,7 +61,7 @@
         "desc": "展示接口"
       }
     },
-    "requiredPrivateInfos": ["chooseLocation", "openLocation"]
+    "requiredPrivateInfos": ["chooseLocation", "getLocation"]
   },
   "mp-alipay": {
     "usingComponents": true

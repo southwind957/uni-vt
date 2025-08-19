@@ -24,3 +24,11 @@ interface ShareOptions {
   success?: (res: any) => void
   fail?: (res: any) => void
 }
+
+interface PosterParams {
+  foodImg: string // 食物图片链接
+  qrImg: string // 二维码图片链接
+  name: string // 食物名称
+  code: string // 编号
+  price: string // 价格
+}

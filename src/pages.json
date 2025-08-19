@@ -19,6 +19,12 @@
       "style": {
         "navigationBarTitleText": "myPage"
       }
+    },
+    {
+      "path": "pages/test/testPage",
+      "style": {
+        "navigationBarTitleText": "download"
+      }
     }
   ],
   "globalStyle": {
