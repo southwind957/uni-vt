@@ -35,7 +35,7 @@
       id="posterCanvas"
       canvas-id="posterCanvas"
       style="width: 100%; height: 100%"
-      class="hidden"
+      v-show="false"
     />
   </view>
 </template>
@@ -85,10 +85,3 @@ const savePoster = () => {
   })
 }
 </script>
-
-<style>
-.hidden {
-  position: fixed;
-  left: -9999px;
-}
-</style>
