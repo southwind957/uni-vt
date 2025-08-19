@@ -107,7 +107,7 @@ const handlePoster = async () => {
 </script>
 
 <template>
-  <button @click="handlePoster">生成海报</button>
+  <wd-button type="primary" @click="handlePoster">生成海报</wd-button>
 
   <view v-if="showPoster" class="fixed inset-0 bg-black/60 flex-center">
     <canvas

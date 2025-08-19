@@ -18,3 +18,10 @@ interface IList<T> {
   items: T[]
   total: number
 }
+
+// 非零整数
+type Int<N extends number> = `${N}` extends `${string}.${string}`
+  ? never
+  : 0 extends N
+    ? never
+    : N

@@ -13,7 +13,8 @@
   <!-- 自定义钩子 -->
   <view class="flex flex-col">
     <view class="mt-10rpx">
-      <wd-button type="primary" @click="handleDownload">下载页面</wd-button>
+      <wd-button type="primary" @click="handleDownload">海报生成</wd-button>
+      <wd-button type="primary" @click="handlePdf">PDF渲染</wd-button>
       <wd-button type="primary" @click="onInit">初始化</wd-button>
       <wd-button type="primary" @click="onSet">设置</wd-button>
       <wd-button type="primary" @click="onGet">获取</wd-button>
@@ -78,6 +79,7 @@ import { useValidateRule } from '@/hooks/useValidate'
 import * as pattern from '@/utils/pattern'
 
 import { setShareConfig } from '@/hooks/useShare'
+import { openPdf } from '@/utils/others'
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -107,6 +109,13 @@ const handleTomap = () => {
     name: '当前位置',
     address: '详细地址'
   })
+}
+
+// PDF渲染
+const handlePdf = () => {
+  openPdf(
+    'https://legal-moccasin-4jtzv5bdxf.edgeone.app/%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%81%A5%E8%BF%9C%E7%9A%84%E6%98%9F%E7%90%83%E4%B8%8A.pdf'
+  )
 }
 
 // 瀑布流的数据
