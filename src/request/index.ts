@@ -2,10 +2,8 @@ import { createAlova } from 'alova'
 import uniappAdapter from '@alova/adapter-uniapp'
 import { decrypt, encrypt } from './crypto'
 
-// 环境变量里的 baseURL
 const BASE_URL = import.meta.env.VITE_APP_URL
 
-// 创建 alova 实例
 export const alovaInst = createAlova({
   baseURL: BASE_URL,
   timeout: 15000,
