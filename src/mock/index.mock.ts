@@ -1,18 +1,18 @@
-export default [
+// mock/index.mock.ts
+import { defineMock } from '@alova/mock'
+
+export default defineMock(
   {
-    url: '/mock/test',
-    method: 'get',
-    response: {
+    // GET /mock/test
+    '/mock/test': {
       code: 200,
       data: {
         name: 'uni-vt'
       }
-    }
-  },
-  {
-    url: '/mock/waterfall',
-    method: 'get',
-    response: {
+    },
+
+    // GET /mock/waterfall
+    '/mock/waterfall': {
       code: 200,
       data: {
         items: [
@@ -55,5 +55,6 @@ export default [
         total: 5
       }
     }
-  }
-]
+  },
+  true // 是否启用本组mock
+)

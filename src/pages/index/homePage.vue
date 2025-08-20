@@ -68,7 +68,7 @@
 import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import useStore from '@/store/index'
-import { getWaterfall } from '@/api/test'
+import { getItems, PostItems } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 import From from '@/components/Form/FormComponent.vue'
@@ -207,8 +207,10 @@ const onSet = () => {
   setFormField('name', 'uni-vt')
 }
 
-const onGet = () => {
+const onGet = async () => {
   console.log('🚀 ~ onGet ~ getFormData():', getFormData())
+  const res = await PostItems()
+  console.log('🚀 ~ onGet ~ res:', res)
 }
 
 function showPaging() {
@@ -216,8 +218,10 @@ function showPaging() {
 }
 
 onLoad(async () => {
-  const res = await getWaterfall<IWaterfall>()
-  waterfallData.value = res.data.items
+  const res = await getItems()
+  console.log('🚀 ~ onLoad ~ res:', res)
+
+  waterfallData.value = []
   setShareConfig({
     title: '测试独立页面标题',
     path: '/pages/index/homePage',

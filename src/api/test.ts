@@ -1,13 +1,17 @@
-import Request from '@/request'
+import { alovaInst } from '@/request'
 
-export const getTest = <T>(): Promise<IResponse<IList<T>>> => {
-  return Request.get('/imgs')
+export const getItems = () => {
+  return alovaInst.Get<IResponse<number[]>>('/users', {
+    params: {
+      page: 1,
+      pageSize: 10
+    }
+  })
 }
 
-export const TestMock = <T>(): Promise<IResponse<T>> => {
-  return Request.get('/mock/test')
-}
-
-export const getWaterfall = <T>(): Promise<IResponse<IList<T>>> => {
-  return Request.get('/mock/waterfall')
+export const PostItems = () => {
+  return alovaInst.Post<IResponse<number[]>>('/users', {
+    username: 'test',
+    password: '123456'
+  })
 }
