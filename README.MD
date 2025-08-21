@@ -93,7 +93,7 @@ filetree
 
 ### 分支特性
 
-由于在最近的更新中引入了alova.js，如果你需要使用原生封装的uni.request，那么请切换到native-request分支，分支保留了原生的请求封装，由于小组人太少，因此此分支暂时停止更新，若有计划后将会把其他分支的特性引入进来。
+由于在最近的更新中引入了alova.js，如果你需要使用原生封装的uni.request，那么请切换到native-request分支，分支保留了原生的请求封装。因为客观原因，此该分支暂时停止更新，若有计划后将会把其他分支的特性引入进来。
 
 ### 开发的架构
 
@@ -107,6 +107,7 @@ filetree
 - [Pinia](https://pinia.vuejs.org/)
 - [UnoCSS](https://github.com/unocss/unocss)
 - [wot-design-uni](https://wot-design-uni.cn/guide/introduction.html)
+- [Alova](https://alova.js.org/zh-CN/)
 
 ### 贡献者
 
