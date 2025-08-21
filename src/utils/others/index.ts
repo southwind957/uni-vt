@@ -40,3 +40,28 @@ export function groupBy<T, K extends string | number | symbol>(
     {} as Record<K, T[]>
   )
 }
+
+// PDF渲染
+export const openPdf = (url: string) => {
+  uni.downloadFile({
+    url,
+    success: (res) => {
+      if (res.statusCode === 200) {
+        uni.openDocument({
+          filePath: res.tempFilePath,
+          fileType: 'pdf',
+          showMenu: true, // 是否显示右上角菜单
+          success: () => {
+            console.log('打开PDF成功')
+          },
+          fail: (err) => {
+            console.error('打开PDF失败', err)
+          }
+        })
+      }
+    },
+    fail: (err) => {
+      console.error('下载PDF失败', err)
+    }
+  })
+}

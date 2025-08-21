@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@alova/adapter-uniapp':
+        specifier: ^2.0.14
+        version: 2.0.14(alova@3.3.4)
+      '@alova/mock':
+        specifier: ^2.0.17
+        version: 2.0.17(alova@3.3.4)
+      '@alova/shared':
+        specifier: ^1.3.1
+        version: 1.3.1
       '@babel/eslint-parser':
         specifier: ^7.26.5
         version: 7.26.5(@babel/core@7.26.0)(eslint@9.18.0(jiti@2.4.2))
@@ -53,6 +62,9 @@ importers:
       '@dcloudio/uni-quickapp-webview':
         specifier: 3.0.0-4010520240507001
         version: 3.0.0-4010520240507001(postcss@8.4.49)(rollup@4.29.1)(vue@3.5.13(typescript@4.9.5))
+      alova:
+        specifier: ^3.3.4
+        version: 3.3.4
       clipboard:
         specifier: ^2.0.11
         version: 2.0.11
@@ -135,9 +147,6 @@ importers:
       '@vue/tsconfig':
         specifier: ^0.1.3
         version: 0.1.3(@types/node@22.10.3)
-      better-mock:
-        specifier: ^0.3.7
-        version: 0.3.7
       eslint:
         specifier: ^9.18.0
         version: 9.18.0(jiti@2.4.2)
@@ -185,6 +194,19 @@ importers:
         version: 1.8.27(typescript@4.9.5)
 
 packages:
+
+  '@alova/adapter-uniapp@2.0.14':
+    resolution: {integrity: sha512-AHrS/evdhONySkmtYHs6Sh1D+a0+zjBeOltcYY2/az/KEPN9p/l4H9Nvy+ghLhzMzfKfnITxeeMOi5ANyERimw==}
+    peerDependencies:
+      alova: ^3.0.20
+
+  '@alova/mock@2.0.17':
+    resolution: {integrity: sha512-Zf+I7AE0/vIt/pv0S25cqw6G+yX0uIJAdzRMkRvFVKGspPHnBZ+a43/8lT1bKdLsvPweydqC7jACCv1JThd3IQ==}
+    peerDependencies:
+      alova: ^3.0.20
+
+  '@alova/shared@1.3.1':
+    resolution: {integrity: sha512-ijSOaFLUFcVzMKSY3avoEE5C03/p9atjMDPBwvNkwnzaCrhv6/m4A121NdadF8YlHCRuifyYfz90IyEdMXTsJg==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -2229,6 +2251,10 @@ packages:
   ajv@8.17.1:
     resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
 
+  alova@3.3.4:
+    resolution: {integrity: sha512-UKKqXdvf8aQ4C7m3brO77YWe5CDz8N59PdAUz7M8gowKUUXTutbk0Vk5DRBrCe0hMUyyNMUhdCZ38llGxCViyQ==}
+    engines: {node: '>= 18.0.0'}
+
   ansi-escapes@4.3.2:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
     engines: {node: '>=8'}
@@ -2340,11 +2366,6 @@ packages:
     resolution: {integrity: sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A==}
     engines: {node: '>=6.0.0'}
 
-  better-mock@0.3.7:
-    resolution: {integrity: sha512-jOhVg87wdPWhVY/nxEsPVxBEI9jd4mUNlh18XwtNMF/5pPeOYU5UQwUB9JhcBP08CdArZ7HrlS0opyit8oL7AQ==}
-    engines: {node: '>=6'}
-    hasBin: true
-
   big.js@5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
 
@@ -2455,9 +2476,6 @@ packages:
   char-regex@1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
     engines: {node: '>=10'}
-
-  china-location@2.1.0:
-    resolution: {integrity: sha512-ZUvn1LnoNcTIbCrhM+xHYurb+F2xP7+g0WE87Ksw5IOmycy9uUq2O+fe8mD0m5vliSOhyiGIZOdQDTCxyFaBjw==}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -4214,6 +4232,9 @@ packages:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
 
+  rate-limiter-flexible@5.0.5:
+    resolution: {integrity: sha512-+/dSQfo+3FYwYygUs/V2BBdwGa9nFtakDwKt4l0bnvNB53TNT++QSFewwHX9qXrZJuMe9j+TUaU21lm5ARgqdQ==}
+
   raw-body@2.5.2:
     resolution: {integrity: sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==}
     engines: {node: '>= 0.8'}
@@ -4243,10 +4264,6 @@ packages:
 
   regenerator-transform@0.15.2:
     resolution: {integrity: sha512-hfMp2BoF0qOk3uc5V20ALGDS2ddjQaLrdl7xrGXvAIow7qeWRM2VA2HuCHkUKk9slq3VwEwLNK3DFBqDfPGYtg==}
-
-  regexparam@1.3.0:
-    resolution: {integrity: sha512-6IQpFBv6e5vz1QAqI+V4k8P2e/3gRrqfCJ9FI+O1FLQTO+Uz6RXZEZOPmTJ6hlGj7gkERzY5BRCv09whKP96/g==}
-    engines: {node: '>=6'}
 
   regexpu-core@6.2.0:
     resolution: {integrity: sha512-H66BPQMrv+V16t8xtmq+UC0CBpiTBA60V8ibS1QVReIp8T1z8hwFxqcGzm9K6lgsN7sB5edVH8a+ze6Fqm4weA==}
@@ -5073,6 +5090,18 @@ packages:
     engines: {HBuilderX: ^3.0.7}
 
 snapshots:
+
+  '@alova/adapter-uniapp@2.0.14(alova@3.3.4)':
+    dependencies:
+      '@alova/shared': 1.3.1
+      alova: 3.3.4
+
+  '@alova/mock@2.0.17(alova@3.3.4)':
+    dependencies:
+      '@alova/shared': 1.3.1
+      alova: 3.3.4
+
+  '@alova/shared@1.3.1': {}
 
   '@ampproject/remapping@2.3.0':
     dependencies:
@@ -8058,6 +8087,11 @@ snapshots:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
+  alova@3.3.4:
+    dependencies:
+      '@alova/shared': 1.3.1
+      rate-limiter-flexible: 5.0.5
+
   ansi-escapes@4.3.2:
     dependencies:
       type-fest: 0.21.3
@@ -8195,11 +8229,6 @@ snapshots:
 
   base64url@3.0.1: {}
 
-  better-mock@0.3.7:
-    dependencies:
-      china-location: 2.1.0
-      regexparam: 1.3.0
-
   big.js@5.2.2: {}
 
   binary-extensions@2.3.0: {}
@@ -8308,8 +8337,6 @@ snapshots:
   chalk@5.4.1: {}
 
   char-regex@1.0.2: {}
-
-  china-location@2.1.0: {}
 
   chokidar@3.6.0:
     dependencies:
@@ -10242,6 +10269,8 @@ snapshots:
 
   range-parser@1.2.1: {}
 
+  rate-limiter-flexible@5.0.5: {}
+
   raw-body@2.5.2:
     dependencies:
       bytes: 3.1.2
@@ -10272,8 +10301,6 @@ snapshots:
   regenerator-transform@0.15.2:
     dependencies:
       '@babel/runtime': 7.26.0
-
-  regexparam@1.3.0: {}
 
   regexpu-core@6.2.0:
     dependencies:

@@ -8,10 +8,10 @@ const key = apiSecurityKey
 
 /**
  * @description: 加密
- * @param {object} data
- * @return {string}
+ * @param {T} data
+ * @return {string | T}
  */
-export const encrypt = (data: string | object): string | object => {
+export const encrypt = <T>(data: T): string | T => {
   if (disabled === '0' || isEmpty(disabled)) {
     return data
   }
@@ -21,9 +21,9 @@ export const encrypt = (data: string | object): string | object => {
 /**
  * @description: 解密
  * @param {string} data
- * @return {object}
+ * @return {T}
  */
-export const decrypt = (data: string | object): any => {
+export const decrypt = <T>(data: string | T): T => {
   if (typeof data === 'object') {
     console.log('data', data)
     return data

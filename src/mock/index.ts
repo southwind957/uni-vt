@@ -1,18 +1,16 @@
-import Mock from 'better-mock/dist/mock.mp'
+import mockData from './index.mock'
 
-const modules = import.meta.glob<{ default: MockBody[] }>('./**/*.mock.ts', {
-  eager: true
-})
-const baseUrl = import.meta.env.VITE_APP_URL as string
-
-Mock.setup({ timeout: '1000' })
-
-const mockData: MockBody[] = Object.values(modules).flatMap(
-  (module) => module.default
-)
-
-for (const item of mockData) {
-  Mock.mock(new RegExp(baseUrl + item.url), item.method, item.response)
+export const mockResponseHandler = () => {
+  return {
+    // 模拟延迟
+    response: (data: any) =>
+      new Promise((resolve) => setTimeout(() => resolve(data), 500)),
+    // 错误模拟
+    onError: (err: Error) => {
+      console.error('Mock error:', err)
+      return { code: -1, message: 'Mock request failed' }
+    }
+  }
 }
 
-export default Mock
+export { mockData }
