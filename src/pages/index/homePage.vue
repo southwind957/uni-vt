@@ -21,6 +21,8 @@
       <wd-button open-type="share">分享给好友</wd-button>
       <wd-button @click="handleMap">获取位置</wd-button>
       <wd-button @click="handleTomap">导航到获取的位置</wd-button>
+      <wd-button @click="handleScanCode">扫描二维码</wd-button>
+      <wd-button @click="show = true">二维码识别</wd-button>
     </view>
     <view class="mb-10">
       <view>当前位置：</view>
@@ -32,6 +34,23 @@
       <view>{{ formData }}</view>
     </view>
   </view>
+  <wd-popup
+    v-model="show"
+    custom-style="border-radius:12rpx; width: 400rpx; height: 400rpx;"
+    @close="show = false"
+  >
+    <image
+      :src="`https://api.2dcode.biz/v1/create-qr-code?data=马林冲傻逼&size=256x256`"
+      mode="scaleToFill"
+      :show-menu-by-longpress="true"
+      @click="
+        previewImage(
+          `https://api.2dcode.biz/v1/create-qr-code?data=马林冲傻逼&size=256x256`
+        )
+      "
+      class="w-[100%] h-[100%]"
+    />
+  </wd-popup>
   <!-- 瀑布流 -->
   <Waterfall
     class="mt-20rpx w-[96%] mx-auto"
@@ -80,14 +99,36 @@ import * as pattern from '@/utils/pattern'
 
 import { setShareConfig } from '@/hooks/useShare'
 import { openPdf } from '@/utils/others'
+import { useScanCode, usePreviewImage } from '@/utils/unifunc'
 
 const { useSafeArea } = useStore()
 console.log('========>', useSafeArea.getSafeAreaTop)
 
 const title = ref('uni-vt')
+const show = ref(false)
 
 const longitude = ref<number>(0)
 const latitude = ref<number>(0)
+
+// 扫描二维码
+const handleScanCode = async () => {
+  try {
+    const res = await useScanCode()
+    console.log('扫描结果：', res)
+  } catch (error) {
+    console.error('扫描失败：', error)
+  }
+}
+
+// 识别二维码
+const previewImage = async (url: string) => {
+  try {
+    const res = await usePreviewImage(url)
+    console.log(res)
+  } catch (error) {
+    console.error('识别失败：', error)
+  }
+}
 
 const handleMap = () => {
   uni.chooseLocation({
