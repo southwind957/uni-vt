@@ -107,6 +107,7 @@ filetree
 - [Pinia](https://pinia.vuejs.org/)
 - [UnoCSS](https://github.com/unocss/unocss)
 - [wot-design-uni](https://wot-design-uni.cn/guide/introduction.html)
+- [Alova](https://alova.js.org/zh-CN/)
 
 ### 贡献者
 
