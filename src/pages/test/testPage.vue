@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 import { usePoster } from '@/hooks/usePoster'
+import { useI18n } from 'vue-i18n'
+import { useLang } from '@/hooks/useLang'
+import { setNavTitle } from '@/utils/unifunc'
+
+const { currentLang, setLang } = useLang()
+const { t } = useI18n()
+
+function changeLang() {
+  setLang(currentLang.value === 'zh' ? 'en' : 'zh')
+}
 
 const { posterUrl, createPoster } = usePoster()
 const showPoster = ref(false)
@@ -104,11 +115,20 @@ const handlePoster = async () => {
 
   showPoster.value = true
 }
+
+onShow(() => {
+  setNavTitle(t('testPage.title'))
+})
 </script>
 
 <template>
   <wd-button type="primary" @click="handlePoster">生成海报</wd-button>
-
+  <wd-button @click="changeLang">切换语言</wd-button>
+  <view class="mt-10 mb-10">
+    <text>语言切换测试</text>
+    <view>{{ t('lang.hello') }}</view>
+    <view>{{ t('lang.welcome') }}</view>
+  </view>
   <view v-if="showPoster" class="fixed inset-0 bg-black/60 flex-center">
     <canvas
       type="2d"

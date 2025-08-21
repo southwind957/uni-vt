@@ -1,3 +1,16 @@
+import { useI18n } from 'vue-i18n'
+
+/**
+ * 设置导航栏标题（自动根据多语言 key 翻译）
+ */
+export function setNavTitle(key: string) {
+  console.log('设置导航栏标题', key)
+  const { t } = useI18n()
+  uni.setNavigationBarTitle({
+    title: t(key)
+  })
+}
+
 // 提示
 export const Toast = (title: string, type: ToastType) => {
   uni.showToast({

@@ -23,6 +23,12 @@
       <wd-button @click="handleTomap">导航到获取的位置</wd-button>
       <wd-button @click="handleScanCode">扫描二维码</wd-button>
       <wd-button @click="show = true">二维码识别</wd-button>
+      <wd-button @click="changeLang">切换语言</wd-button>
+    </view>
+    <view class="mt-10 mb-10">
+      <text>语言切换测试</text>
+      <view>{{ t('lang.hello') }}</view>
+      <view>{{ t('lang.welcome') }}</view>
     </view>
     <view class="mb-10">
       <view>当前位置：</view>
@@ -86,6 +92,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
+import { useI18n } from 'vue-i18n'
 import useStore from '@/store/index'
 import { getItems, PostItems } from '@/api/test'
 // 引入瀑布流组件
@@ -96,12 +103,12 @@ import { useForm } from '@/hooks/useForm'
 import { useValidateRule } from '@/hooks/useValidate'
 // 引入常用正则
 import * as pattern from '@/utils/pattern'
-
 import { setShareConfig } from '@/hooks/useShare'
 import { openPdf } from '@/utils/others'
 import { useScanCode, usePreviewImage } from '@/utils/unifunc'
-
+import { useLang } from '@/hooks/useLang'
 const { useSafeArea } = useStore()
+
 console.log('========>', useSafeArea.getSafeAreaTop)
 
 const title = ref('uni-vt')
@@ -109,6 +116,13 @@ const show = ref(false)
 
 const longitude = ref<number>(0)
 const latitude = ref<number>(0)
+
+const { currentLang, setLang } = useLang()
+const { t } = useI18n()
+
+function changeLang() {
+  setLang(currentLang.value === 'zh' ? 'en' : 'zh')
+}
 
 // 扫描二维码
 const handleScanCode = async () => {

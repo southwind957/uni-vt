@@ -1,0 +1,9 @@
+{
+  "lang": {
+    "hello": "Hello",
+    "welcome": "Welcome to uni-vt"
+  },
+  "testPage": {
+    "title": "Test Page"
+  }
+}

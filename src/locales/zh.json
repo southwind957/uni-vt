@@ -1,0 +1,9 @@
+{
+  "lang": {
+    "hello": "你好",
+    "welcome": "欢迎使用 uni-vt"
+  },
+  "testPage": {
+    "title": "测试页面"
+  }
+}
