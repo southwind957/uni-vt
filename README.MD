@@ -3,7 +3,7 @@
     <img src="image/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">完全基于VUE3+VITE的uniapp模板</h3>
+<h3 align="center">完全基于VUE3+VITE的uniapp模板</h3>
   <p align="center">
     大大缩短你花在项目构建的时间
     <br />
@@ -21,18 +21,20 @@
   </p>
 
 </p>
- 
+
 ## 目录
 
 - [上手指南](#上手指南)
   - [开发前的配置要求](#开发前的配置要求)
   - [安装步骤](#安装步骤)
-  <!-- - [文件目录说明](#文件目录说明) -->
+
+- [分支特性](#分支特性)
 - [开发的架构](#开发的架构)
 - [部署](#部署)
 - [使用到的框架](#使用到的框架)
 - [贡献者](#贡献者)
   - [如何参与开源项目](#如何参与开源项目)
+
 - [版本控制](#版本控制)
 - [作者](#作者)
 - [鸣谢](#鸣谢)
@@ -89,6 +91,10 @@ filetree
 
 ``` -->
 
+### 分支特性
+
+由于在最近的更新中引入了alova.js，如果你需要使用原生封装的uni.request，那么请切换到native-request分支，分支保留了原生的请求封装。因为客观原因，此该分支暂时停止更新，若有计划后将会把其他分支的特性引入进来。
+
 ### 开发的架构
 
 使用Vite+uniapp+vue3开发。
@@ -101,6 +107,7 @@ filetree
 - [Pinia](https://pinia.vuejs.org/)
 - [UnoCSS](https://github.com/unocss/unocss)
 - [wot-design-uni](https://wot-design-uni.cn/guide/introduction.html)
+- [Alova](https://alova.js.org/zh-CN/)
 
 ### 贡献者
 
