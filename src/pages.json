@@ -25,6 +25,18 @@
       "style": {
         "navigationBarTitleText": "download"
       }
+    },
+    {
+      "path": "pages/test/layoutPage",
+      "style": {
+        "navigationBarTitleText": "layout测试"
+      }
+    },
+    {
+      "path": "pages/test/themePage",
+      "style": {
+        "navigationBarTitleText": "theme测试"
+      }
     }
   ],
   "globalStyle": {

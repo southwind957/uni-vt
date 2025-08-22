@@ -3,6 +3,18 @@ $thme-color: red;
 // 字体
 $font-family: '微软雅黑';
 
+.page {
+  --main-color: #42b983; // 默认主题色
+}
+
+.theme-a {
+  --main-color: #42b983;
+}
+
+.theme-b {
+  --main-color: #ff4d4f;
+}
+
 // 快速居中
 @mixin flex-center {
   display: flex;

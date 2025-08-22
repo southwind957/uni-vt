@@ -24,6 +24,8 @@
       <wd-button @click="handleScanCode">扫描二维码</wd-button>
       <wd-button @click="show = true">二维码识别</wd-button>
       <wd-button @click="changeLang">切换语言</wd-button>
+      <wd-button @click="toLayout">layout测试</wd-button>
+      <wd-button @click="changeTheme">切换主题色</wd-button>
     </view>
     <view class="mt-10 mb-10">
       <text>语言切换测试</text>
@@ -122,6 +124,20 @@ const { t } = useI18n()
 
 function changeLang() {
   setLang(currentLang.value === 'zh' ? 'en' : 'zh')
+}
+
+// layout测试
+const toLayout = () => {
+  uni.navigateTo({
+    url: '/pages/test/layoutPage'
+  })
+}
+
+// theme测试
+const changeTheme = () => {
+  uni.navigateTo({
+    url: '/pages/test/themePage'
+  })
 }
 
 // 扫描二维码
