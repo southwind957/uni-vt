@@ -7,12 +7,14 @@ $font-family: '微软雅黑';
   --main-color: #42b983; // 默认主题色
 }
 
-.theme-a {
-  --main-color: #42b983;
+.light {
+  --main-color: #35495e;
+  --page-bg-color: #42b983;
 }
 
-.theme-b {
-  --main-color: #ff4d4f;
+.dark {
+  --main-color: #20232a;
+  --page-bg-color: #61dafb;
 }
 
 // 快速居中

@@ -1,19 +1,13 @@
+import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { changeNavaBar } from '@/utils/unifunc'
 
-const theme = ref<'light' | 'dark'>('light')
-
-export function useThemeStore() {
-  const setTheme = (value: 'light' | 'dark') => {
-    theme.value = value
-    uni.setStorageSync('theme', value)
+export const useThemeStore = defineStore('theme', () => {
+  const theme = ref('light')
+  const toggleTheme = () => {
+    const currentTheme = theme.value === 'light' ? 'dark' : 'light'
+    theme.value = currentTheme
+    changeNavaBar(currentTheme)
   }
-
-  const initTheme = () => {
-    const saved = uni.getStorageSync('theme') as 'light' | 'dark'
-    if (saved) {
-      theme.value = saved
-    }
-  }
-
-  return { theme, setTheme, initTheme }
-}
+  return { theme, toggleTheme }
+})

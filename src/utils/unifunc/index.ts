@@ -61,3 +61,17 @@ export function usePreviewImage(url: string) {
     })
   })
 }
+
+export function changeNavaBar(theme: string) {
+  if (theme === 'dark') {
+    uni.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#61dafb'
+    })
+  } else {
+    uni.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#42b983'
+    })
+  }
+}

@@ -25,7 +25,7 @@
       <wd-button @click="show = true">二维码识别</wd-button>
       <wd-button @click="changeLang">切换语言</wd-button>
       <wd-button @click="toLayout">layout测试</wd-button>
-      <wd-button @click="changeTheme">切换主题色</wd-button>
+      <wd-button @click="changeTheme">切换主题色(scss)</wd-button>
     </view>
     <view class="mt-10 mb-10">
       <text>语言切换测试</text>
