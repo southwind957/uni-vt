@@ -33,8 +33,12 @@ export const alovaInst = createAlova({
     onSuccess: (response: any) => {
       // response 是 uniapp 的 response
       const { data } = response
-
-      if (data.code !== 200) {
+      // TODO 这是适配GitHub/test的测试数据，由于没有code，记得删除
+      const newdata = {
+        code: 200,
+        data: data
+      }
+      if (newdata.code !== 200) {
         uni.showToast({ title: data.message || '请求失败', icon: 'none' })
         throw new Error(data.message)
       }

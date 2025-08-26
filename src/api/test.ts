@@ -1,10 +1,9 @@
 import { alovaInst } from '@/request'
 
 export const getItems = () => {
-  return alovaInst.Get<IResponse<number[]>>('/users', {
+  return alovaInst.Get<any[]>('/v1/images/search', {
     params: {
-      page: 1,
-      pageSize: 10
+      limit: 10
     }
   })
 }

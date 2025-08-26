@@ -1,4 +1,3 @@
-import tripledes from 'crypto-js/tripledes'
 import { apiSecurityKey } from './config'
 import { isEmpty } from '@/utils/others'
 import CryptoJS from 'crypto-js'
@@ -15,7 +14,7 @@ export const encrypt = <T>(data: T): string | T => {
   if (disabled === '0' || isEmpty(disabled)) {
     return data
   }
-  return tripledes.encrypt(JSON.stringify(data), key).toString()
+  return CryptoJS.AES.encrypt(JSON.stringify(data), key).toString()
 }
 
 /**
@@ -28,5 +27,5 @@ export const decrypt = <T>(data: string | T): T => {
     console.log('data', data)
     return data
   }
-  return JSON.parse(tripledes.decrypt(data, key).toString(CryptoJS.enc.Utf8))
+  return JSON.parse(CryptoJS.AES.decrypt(data, key).toString(CryptoJS.enc.Utf8))
 }

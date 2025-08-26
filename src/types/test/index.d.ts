@@ -1,6 +1,7 @@
 interface IWaterfall {
-  name: string
+  id: number | string
   url: string
-  avator: string
-  content: string
+  width: number // 图片原始宽度
+  height: number // 图片原始高度
+  [key: string]: any
 }

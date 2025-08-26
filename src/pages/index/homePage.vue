@@ -76,9 +76,9 @@
         <view>
           <view class="flex items-center space-x-4">
             <wd-img :width="30" :height="30" round :src="item.avator" />
-            <view class="mt-10rpx">{{ item.name }}</view>
+            <view class="mt-10rpx">{{ item.id }}</view>
           </view>
-          <view class="text-left">{{ item.content }}</view>
+          <view class="text-left">{{ item.id }}</view>
         </view>
       </view>
     </template>
@@ -290,9 +290,11 @@ function showPaging() {
 
 onLoad(async () => {
   const res = await getItems()
-  console.log('🚀 ~ onLoad ~ res:', res)
+  console.log('res', res)
 
-  waterfallData.value = []
+  waterfallData.value = res
+  console.log(waterfallData.value)
+
   setShareConfig({
     title: '测试独立页面标题',
     path: '/pages/index/homePage',
