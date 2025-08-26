@@ -65,3 +65,17 @@ export const openPdf = (url: string) => {
     }
   })
 }
+
+export const getMinIdx = (arr: number[]) => {
+  return arr.reduce(
+    (minIdx, curr, idx) => (curr < arr[minIdx] ? idx : minIdx),
+    0
+  )
+}
+
+export const getMaxIdx = (arr: number[]) => {
+  return arr.reduce(
+    (maxIdx, curr, idx) => (curr > arr[maxIdx] ? idx : maxIdx),
+    0
+  )
+}

@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts" setup>
+import { getMinIdx } from '@/utils/others'
 import { computed, ref, onMounted, watch } from 'vue'
 // 多列情况下，需要开发者把数据交给组件，因为让开发者写三四个插槽很麻烦
 const props = defineProps({
@@ -36,8 +37,16 @@ const width = computed(() => {
 // 切分数组,将数组data按照column进行分组
 const initData = (columnCount: number) => {
   const result: IWaterfall[][] = Array.from({ length: columnCount }, () => [])
+  const heightArr = Array.from({ length: columnCount }, () => 0)
   props.data.forEach((item, index) => {
-    result[index % columnCount].push(item)
+    if (index < columnCount) {
+      result[index].push(item)
+      heightArr[index] = item.height
+    } else {
+      const minHeight = getMinIdx(heightArr)
+      result[minHeight].push(item)
+      heightArr[minHeight] += item.height
+    }
   })
   columnData.value = result
 }
