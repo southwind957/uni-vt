@@ -37,6 +37,12 @@
       "style": {
         "navigationBarTitleText": "theme测试"
       }
+    },
+    {
+      "path": "pages/test/llmPage",
+      "style": {
+        "navigationBarTitleText": "ai测试"
+      }
     }
   ],
   "globalStyle": {

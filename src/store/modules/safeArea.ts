@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 type safeArea = {
   top: number
+  bottom: number
 }
 
 export const useStyleStore = defineStore('style', {
@@ -12,18 +13,24 @@ export const useStyleStore = defineStore('style', {
   } => {
     return {
       safeArea: {
-        top: 0
+        top: 0,
+        bottom: 0
       }
     }
   },
   getters: {
     getSafeAreaTop(): number {
-      return this.safeArea.top
+      return this.safeArea.top || 40
+    },
+    getSafeAreaBottom(): number {
+      return this.safeArea.bottom || 40
     }
   },
   actions: {
     setSafeArea() {
-      this.safeArea.top = pxToRpx(getSafeAreaSize())
+      const safeArea = getSafeAreaSize()
+      this.safeArea.top = pxToRpx(safeArea.top)
+      this.safeArea.bottom = pxToRpx(safeArea.bottom)
     }
   }
 })

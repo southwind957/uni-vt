@@ -1,9 +1,14 @@
 // 获取安全区大小
-export const getSafeAreaSize = (): number => {
+export const getSafeAreaSize = (): { top: number; bottom: number } => {
   let safeTop = 0
+  let safeBottom = 0
   const safeArea = uni.getSystemInfoSync()
   safeTop = (safeArea.safeAreaInsets && safeArea.safeAreaInsets.top) || 0
-  return safeTop as number
+  safeBottom = (safeArea.safeAreaInsets && safeArea.safeAreaInsets.bottom) || 0
+  return {
+    top: safeTop,
+    bottom: safeBottom
+  }
 }
 
 // 获取顶部导航栏大小

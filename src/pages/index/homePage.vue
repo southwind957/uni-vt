@@ -26,6 +26,7 @@
       <wd-button @click="changeLang">切换语言</wd-button>
       <wd-button @click="toLayout">layout测试</wd-button>
       <wd-button @click="changeTheme">切换主题色(scss)</wd-button>
+      <wd-button @click="toAi">ai测试</wd-button>
     </view>
     <view class="mt-10 mb-10">
       <text>语言切换测试</text>
@@ -137,6 +138,13 @@ const toLayout = () => {
 const changeTheme = () => {
   uni.navigateTo({
     url: '/pages/test/themePage'
+  })
+}
+
+// ai测试
+const toAi = () => {
+  uni.navigateTo({
+    url: '/pages/test/llmPage'
   })
 }
 
