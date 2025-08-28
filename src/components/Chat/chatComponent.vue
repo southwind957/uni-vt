@@ -43,6 +43,10 @@
               />
             </view>
           </view>
+          <view v-if="loading" class="flex items-center justify-center mt-10">
+            <text>正在思考中...</text>
+            <wd-loading size="50rpx" />
+          </view>
         </view>
       </scroll-view>
     </view>
@@ -64,21 +68,35 @@ interface Message {
 
 const messages = ref<Message[]>([])
 const scrollInto = ref<number>(0)
+const loading = ref<boolean>(false)
 
 const userAvatar = uni.getStorageSync('userAvatar') || '/static/logo.png'
 
 // AI 回复
 const fakeAiReply = async (msg: string): Promise<string> => {
-  const res = await PostItemsAi(msg)
-  console.log('PostItemsAi', res)
-  const result = res.choices[0].message.content
-  return result
+  try {
+    loading.value = true
+    const res = await PostItemsAi(msg)
+    console.log('PostItemsAi', res)
+    const result = res.choices[0].message.content
+    return result
+  } catch (error) {
+    console.log('error', error)
+    loading.value = false
+    return '请检查相关配置或网络'
+  } finally {
+    loading.value = false
+  }
 }
 
 const sendMessage = async (msg: string) => {
   if (!msg.trim()) return
 
   messages.value.push({ role: 'user', content: msg })
+  const parentHeight = await getContentHeight('scrollContent', instance)
+  nextTick(() => {
+    scrollInto.value = parentHeight
+  })
 
   const reply = await fakeAiReply(
     messages.value[messages.value.length - 1].content
@@ -87,7 +105,6 @@ const sendMessage = async (msg: string) => {
   messages.value.push({ role: 'ai', content: '' })
   const aiIndex = messages.value.length - 1
   //  先获取父dom的高度
-  const parentHeight = await getContentHeight('scrollContent', instance)
   let i = 0
   const timer = setInterval(() => {
     if (i < reply.length) {
