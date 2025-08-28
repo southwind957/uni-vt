@@ -28,7 +28,6 @@ type ScanCodeResult = NonNullable<
     : never
 >
 
-// src/utils/useScanCode.ts
 export function useScanCode(options?: UniApp.ScanCodeOptions) {
   return new Promise<ScanCodeResult>((resolve, reject) => {
     uni.scanCode({
@@ -74,4 +73,25 @@ export function changeNavaBar(theme: string) {
       backgroundColor: '#42b983'
     })
   }
+}
+
+import type { ComponentInternalInstance } from 'vue'
+// 获取指定dom高度
+export const getContentHeight = (
+  id: string,
+  instance: ComponentInternalInstance | null
+): Promise<number> => {
+  return new Promise((resolve) => {
+    const query = uni.createSelectorQuery().in(instance)
+    query
+      .select(`#${id}`)
+      .boundingClientRect((data) => {
+        if (data) {
+          resolve(data.height)
+        } else {
+          resolve(0)
+        }
+      })
+      .exec()
+  })
 }

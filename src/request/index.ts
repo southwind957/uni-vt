@@ -3,6 +3,8 @@ import uniappAdapter from '@alova/adapter-uniapp'
 import { decrypt, encrypt } from './crypto'
 
 const BASE_URL = import.meta.env.VITE_APP_URL
+// 再创建一个实例,无需加解密,用作AI请求
+const BASE_AI_URL = import.meta.env.VITE_APP_AI_URL
 
 export const alovaInst = createAlova({
   baseURL: BASE_URL,
@@ -45,6 +47,56 @@ export const alovaInst = createAlova({
       return decrypt(data)
     },
     onError: (err) => {
+      uni.showToast({ title: '网络错误', icon: 'none' })
+      throw err
+    }
+  }
+})
+
+export const alovaAiInst = createAlova({
+  baseURL: BASE_AI_URL,
+  timeout: 15000,
+  ...uniappAdapter(),
+  beforeRequest: (method) => {
+    console.log('method', method)
+
+    method.config.headers = {
+      ...method.config.headers,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${import.meta.env.VITE_APP_AI_KEY}`,
+      appid: import.meta.env.VITE_APP_AI_APP_ID
+    }
+    const { text } = method.data
+    // 百度千帆
+    method.data = {
+      model: import.meta.env.VITE_APP_AI_MODEL,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'text',
+              text
+            }
+          ]
+        }
+      ],
+      web_search: {
+        enable: false,
+        enable_citation: false,
+        enable_trace: false
+      },
+      plugin_options: {}
+    }
+  },
+  responded: {
+    onSuccess: (response: any) => {
+      const { data } = response
+      console.log('data', data)
+      return data
+    },
+    onError: (err) => {
+      console.log('err', err)
       uni.showToast({ title: '网络错误', icon: 'none' })
       throw err
     }
