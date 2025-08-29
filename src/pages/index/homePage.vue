@@ -27,6 +27,14 @@
       <wd-button @click="toLayout">layout测试</wd-button>
       <wd-button @click="changeTheme">切换主题色(scss)</wd-button>
       <wd-button @click="toAi">ai测试</wd-button>
+      <TrackButton event="btn_only_track">只埋点</TrackButton>
+      <TrackButton
+        type="primary"
+        event="btn_submit"
+        :params="{ form: getFormData() }"
+        @click="doSubmit"
+        >不影响正常逻辑</TrackButton
+      >
     </view>
     <view class="mt-10 mb-10">
       <text>语言切换测试</text>
@@ -101,6 +109,8 @@ import { getItems, PostItems } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 import From from '@/components/Form/FormComponent.vue'
+// 引入数据埋点
+import TrackButton from '@/components/Button/TrackButton.vue'
 // 引入自定义hooks
 import { useForm } from '@/hooks/useForm'
 import { useValidateRule } from '@/hooks/useValidate'
@@ -110,6 +120,7 @@ import { setShareConfig } from '@/hooks/useShare'
 import { openPdf } from '@/utils/others'
 import { useScanCode, usePreviewImage } from '@/utils/unifunc'
 import { useLang } from '@/hooks/useLang'
+import { track } from '@/utils/tracks'
 const { useSafeArea } = useStore()
 
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -146,6 +157,12 @@ const toAi = () => {
   uni.navigateTo({
     url: '/pages/test/llmPage'
   })
+}
+
+// 数据埋点
+const doSubmit = () => {
+  // 测试自动埋点
+  console.log('测试自动埋点')
 }
 
 // 扫描二维码
@@ -308,6 +325,7 @@ onLoad(async () => {
     path: '/pages/index/homePage',
     imageUrl: 'https://www.quazero.com/uploads/allimg/140303/1-140303215009.jpg'
   })
+  track('homePage_load', { name: '张三' })
 })
 </script>
 
