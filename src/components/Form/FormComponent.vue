@@ -8,40 +8,13 @@
         v-for="([category, items], catIndex) in Object.entries(schemaList)"
         :key="catIndex"
       >
-        <div v-for="(item, index) in items" :key="`${catIndex}-${index}`">
-          <wd-input
-            v-if="item.type === 'Input'"
-            :label="item.label"
-            label-width="100px"
-            show-word-limit
-            :prop="item.field"
-            suffix-icon="warn-bold"
-            clearable
+        <template v-for="(item, index) in items" :key="`${catIndex}-${index}`">
+          <component
+            :is="componentsMap[item.type]"
+            v-bind="getComponentProps(item)"
             v-model="formData[item.field]"
-            :placeholder="`请输入${item.label}`"
           />
-          <wd-input
-            v-if="item.type === 'Password'"
-            :label="item.label"
-            label-width="100px"
-            show-word-limit
-            :prop="item.field"
-            suffix-icon="warn-bold"
-            type="password"
-            clearable
-            v-model="formData[item.field]"
-            :placeholder="`请输入${item.label}`"
-          />
-          <wd-cell
-            :title="item.label"
-            title-width="100px"
-            v-if="item.type === 'Number'"
-          >
-            <view style="text-align: left">
-              <wd-input-number v-model="formData[item.field]" />
-            </view>
-          </wd-cell>
-        </div>
+        </template>
       </wd-cell-group>
       <wd-cell title-width="0px">
         <view>
@@ -58,6 +31,11 @@ import { groupBy } from '@/utils/others'
 
 const emit = defineEmits(['register', 'submitForm'])
 
+// 用于请求的数组
+const requestList = ref<string[]>([])
+// 保留原数组，为了兼容wot-design的picker组件,泛型为T
+const originalFormSchema = ref<originPicker[]>([])
+
 // 动态接收参数，配合钩子进行数据控制
 const props = defineProps({
   rules: {
@@ -70,9 +48,76 @@ const props = defineProps({
   }
 })
 
-const formData = ref<Record<string, any>>({})
+const formData = ref<FormDataType>({})
 
 const schemaList = groupBy(props.formSchema, (item) => item.cell as string)
+
+// 组件映射
+const componentsMap: Record<string, any> = {
+  Input: 'wd-input',
+  Password: 'wd-input',
+  Number: 'wd-input-number',
+  Picker: 'wd-picker',
+  InputAddress: 'wd-input',
+  Checkbox: 'wd-checkbox',
+  Rate: 'wd-rate',
+  Switch: 'wd-switch',
+  Sign: 'wd-signature'
+}
+
+// 根据组件映射构造相应的props
+const getComponentProps = <T extends baseOption>(item: IFormSchema<T>) => {
+  if (
+    item.type === 'Input' ||
+    item.type === 'Password' ||
+    item.type === 'InputAddress'
+  ) {
+    const componentProps = {
+      'show-word-limit': true,
+      prop: item.field,
+      'suffix-icon': item.type === 'InputAddress' ? 'location' : undefined,
+      clearable: true,
+      type: item.type === 'Password' ? 'password' : 'text',
+      placeholder: `请输入${item.label}`
+    }
+    return componentProps
+  }
+  if (
+    item.type === 'Number' &&
+    item.formItemProps &&
+    'min' in item.formItemProps
+  ) {
+    const numberProps = item.formItemProps as INumberProps
+    const componentProps = {
+      min: numberProps?.min || 0,
+      max: numberProps?.max || 100,
+      step: numberProps?.step || 1
+    }
+    return componentProps
+  }
+  if (item.type === 'Picker' && item.formItemProps) {
+    // 类型断言为pickerProps
+    const pickerProps = item.formItemProps
+    // 在此之前，接收一下传入的数据，如果未传就请求一下数据
+    if (pickerProps && 'options' in pickerProps && !pickerProps.options) {
+      // 类型断言为string[]，如果未传就默认空数组,因为传递要求就是字符串数组
+      requestList.value = pickerProps?.options ?? []
+    }
+    // 如果有api，就请求一下数据
+    if (pickerProps && 'optionApi' in pickerProps && pickerProps.optionApi) {
+      pickerProps.optionApi().then((res) => {
+        // 类型断言为T[]，如果未传就默认空数组,因为传递要求就是字符串数组
+        requestList.value = res.map((item) => item.name)
+        // 保留原数组，为了兼容wot-design的picker组件
+        originalFormSchema.value = res
+      })
+    }
+    const componentProps = {
+      columns: requestList.value
+    }
+    return componentProps
+  }
+}
 
 const submitForm = () => {
   emit('submitForm', formData.value)
