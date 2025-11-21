@@ -21,6 +21,7 @@ type IFormType =
   | 'Rate'
   | 'Switch'
   | 'Sign'
+  | 'Textarea'
 
 interface INumberProps {
   min?: number

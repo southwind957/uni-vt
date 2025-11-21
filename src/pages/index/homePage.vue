@@ -97,7 +97,7 @@ import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useI18n } from 'vue-i18n'
 import useStore from '@/store/index'
-import { getItems, PostItems } from '@/api/test'
+import { getItems, getTestData, PostItems } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 import From from '@/components/Form/FormComponent.vue'
@@ -243,6 +243,30 @@ const schema = ref<IFormSchema[]>([
     label: '价格',
     type: 'Number',
     placeholder: '请输入价格',
+    cell: '扩展数据'
+  },
+  {
+    field: 'sign',
+    label: '签名',
+    type: 'Sign',
+    placeholder: '请签名',
+    cell: '扩展数据'
+  },
+  {
+    field: 'gender',
+    label: '性别',
+    type: 'Picker',
+    placeholder: '请选择性别',
+    cell: '扩展数据',
+    formItemProps: {
+      optionApi: () => getTestData()
+    }
+  },
+  {
+    field: 'star',
+    label: '星级',
+    type: 'Rate',
+    placeholder: '请选择星级',
     cell: '扩展数据'
   }
 ])

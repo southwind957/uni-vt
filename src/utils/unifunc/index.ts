@@ -95,3 +95,19 @@ export const getContentHeight = (
       .exec()
   })
 }
+
+export function uploadFile(filePath: string) {
+  return new Promise((resolve, reject) => {
+    uni.uploadFile({
+      url: import.meta.env.VITE_APP_AI_IMG_URL,
+      filePath: filePath,
+      name: 'image',
+      success: (res) => {
+        resolve(JSON.parse(res.data))
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}

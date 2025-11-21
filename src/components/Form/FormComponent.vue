@@ -1,6 +1,6 @@
 <template>
   <view>
-    <wd-form ref="form" :rules="props.rules">
+    <wd-form ref="form" :rules="props.rules" :model="formData">
       <wd-cell-group
         custom-class="group"
         :title="category"
@@ -8,13 +8,99 @@
         v-for="([category, items], catIndex) in Object.entries(schemaList)"
         :key="catIndex"
       >
-        <template v-for="(item, index) in items" :key="`${catIndex}-${index}`">
-          <component
-            :is="componentsMap[item.type]"
-            v-bind="getComponentProps(item)"
+        <wd-cell
+          :title="item.label"
+          title-width="100px"
+          v-for="item in items"
+          :key="`${catIndex}-${item.field}`"
+        >
+          <wd-input
+            v-if="item.type === 'Input'"
+            show-word-limit
+            :prop="item.field"
+            suffix-icon="warn-bold"
+            clearable
+            v-model="formData[item.field]"
+            :placeholder="`请输入${item.label}`"
+          />
+          <wd-input
+            v-if="item.type === 'InputAddress'"
+            show-word-limit
+            :prop="item.field"
+            suffix-icon="location"
+            v-model="formData[item.field]"
+            :placeholder="`请输入${item.label}`"
+            @click="selectAddress(item)"
+          />
+          <wd-input
+            v-if="item.type === 'Password'"
+            show-word-limit
+            :prop="item.field"
+            suffix-icon="warn-bold"
+            type="password"
+            clearable
+            v-model="formData[item.field]"
+            :placeholder="`请输入${item.label}`"
+          />
+          <wd-input-number
+            v-if="item.type === 'Number'"
             v-model="formData[item.field]"
           />
-        </template>
+          <wd-picker
+            :columns="getNames(item)"
+            v-if="item.type === 'Picker'"
+            v-model="formData[item.field]"
+          />
+          <wd-textarea
+            v-if="item.type === 'Textarea'"
+            v-model="formData[item.field]"
+            :placeholder="`请输入${item.label}`"
+          />
+          <wd-rate
+            v-if="item.type === 'Rate'"
+            :icon="
+              hasKeys(item.formItemProps, ['icon'])
+                ? item.formItemProps.icon
+                : 'star'
+            "
+            :active-color="
+              hasKeys(item.formItemProps, ['activeColor'])
+                ? item.formItemProps.activeColor
+                : 'red'
+            "
+            v-model="formData[item.field]"
+          />
+          <wd-switch
+            :active-color="
+              hasKeys(item.formItemProps, ['activeColor'])
+                ? item.formItemProps.activeColor
+                : 'red'
+            "
+            :inactive-color="
+              hasKeys(item.formItemProps, ['inactiveColor'])
+                ? item.formItemProps.inactiveColor
+                : 'gray'
+            "
+            v-if="item.type === 'Switch'"
+            v-model="formData[item.field]"
+          />
+          <wd-signature
+            v-if="item.type === 'Sign'"
+            :export-scale="2"
+            :background-color="
+              hasKeys(item.formItemProps, ['backgroundColor'])
+                ? item.formItemProps.backgroundColor
+                : '#ffffff'
+            "
+            pressure
+            enable-history
+            :height="200"
+            :min-width="1"
+            :max-width="6"
+            @confirm="confirmSign"
+            @clear="clearSign"
+          />
+        </wd-cell>
       </wd-cell-group>
       <wd-cell title-width="0px">
         <view>
@@ -28,13 +114,15 @@
 <script lang="ts" setup>
 import { ref, type PropType, onMounted } from 'vue'
 import { groupBy } from '@/utils/others'
+import { hasKeys } from '@/utils/typeFunc'
+import { uploadFile } from '@/utils/unifunc'
 
 const emit = defineEmits(['register', 'submitForm'])
 
-// 用于请求的数组
-const requestList = ref<string[]>([])
 // 保留原数组，为了兼容wot-design的picker组件,泛型为T
 const originalFormSchema = ref<originPicker[]>([])
+// wot-design的签名组件图片
+const img = ref<Partial<any>>({})
 
 // 动态接收参数，配合钩子进行数据控制
 const props = defineProps({
@@ -52,80 +140,72 @@ const formData = ref<FormDataType>({})
 
 const schemaList = groupBy(props.formSchema, (item) => item.cell as string)
 
-// 组件映射
-const componentsMap: Record<string, any> = {
-  Input: 'wd-input',
-  Password: 'wd-input',
-  Number: 'wd-input-number',
-  Picker: 'wd-picker',
-  InputAddress: 'wd-input',
-  Checkbox: 'wd-checkbox',
-  Rate: 'wd-rate',
-  Switch: 'wd-switch',
-  Sign: 'wd-signature'
+// 处理函数开始
+// 选择
+const getNames = (item: IFormSchema<originPicker>) => {
+  //  如果传递了options,返回options的name
+  const options = ref<string[]>([])
+  const formItem = item.formItemProps
+  if (formItem && hasKeys(formItem, ['options'])) {
+    options.value = formItem?.options.map((item: string) => item)
+  }
+  if (formItem && hasKeys(formItem, ['optionApi'])) {
+    // 先执行一下传递过来的请求
+    formItem.optionApi().then((res: IResponse<IList<originPicker>>) => {
+      originalFormSchema.value = res.data.items
+      //  处理一下options的格式, 为了兼容wot-design的picker组件
+      originalFormSchema.value.forEach((item) => {
+        options.value.push(item.name)
+      })
+    })
+    return options.value
+  }
 }
 
-// 根据组件映射构造相应的props
-const getComponentProps = <T extends baseOption>(item: IFormSchema<T>) => {
-  if (
-    item.type === 'Input' ||
-    item.type === 'Password' ||
-    item.type === 'InputAddress'
-  ) {
-    const componentProps = {
-      'show-word-limit': true,
-      prop: item.field,
-      'suffix-icon': item.type === 'InputAddress' ? 'location' : undefined,
-      clearable: true,
-      type: item.type === 'Password' ? 'password' : 'text',
-      placeholder: `请输入${item.label}`
+// 签名
+const confirmSign = async (result: any) => {
+  if (result.success) {
+    const res = await uploadFile(result.tempFilePath)
+    if (res) {
+      img.value = res
     }
-    return componentProps
   }
-  if (
-    item.type === 'Number' &&
-    item.formItemProps &&
-    'min' in item.formItemProps
-  ) {
-    const numberProps = item.formItemProps as INumberProps
-    const componentProps = {
-      min: numberProps?.min || 0,
-      max: numberProps?.max || 100,
-      step: numberProps?.step || 1
+}
+
+const clearSign = () => {
+  img.value = {}
+}
+
+const selectAddress = (item: IFormSchema) => {
+  uni.chooseLocation({
+    success: (res) => {
+      formData.value[item.field] = res.address
+      formData.value['lat'] = res.latitude
+      formData.value['lng'] = res.longitude
     }
-    return componentProps
-  }
-  if (item.type === 'Picker' && item.formItemProps) {
-    // 类型断言为pickerProps
-    const pickerProps = item.formItemProps
-    // 在此之前，接收一下传入的数据，如果未传就请求一下数据
-    if (pickerProps && 'options' in pickerProps && !pickerProps.options) {
-      // 类型断言为string[]，如果未传就默认空数组,因为传递要求就是字符串数组
-      requestList.value = pickerProps?.options ?? []
-    }
-    // 如果有api，就请求一下数据
-    if (pickerProps && 'optionApi' in pickerProps && pickerProps.optionApi) {
-      pickerProps.optionApi().then((res) => {
-        // 类型断言为T[]，如果未传就默认空数组,因为传递要求就是字符串数组
-        requestList.value = res.map((item) => item.name)
-        // 保留原数组，为了兼容wot-design的picker组件
-        originalFormSchema.value = res
-      })
-    }
-    const componentProps = {
-      columns: requestList.value
-    }
-    return componentProps
-  }
+  })
 }
 
 const submitForm = () => {
+  for (const item of props.formSchema) {
+    if (item.type === 'Sign') {
+      formData.value[item.field] = img.value.url
+    }
+    if (item.type === 'Picker') {
+      formData.value[item.field] = originalFormSchema.value.find(
+        (i) => i.name === formData.value[item.field]
+      )?.id as number
+    }
+  }
   emit('submitForm', formData.value)
 }
 
 onMounted(() => {
   props.formSchema.forEach((item) => {
     formData.value[item.field] = ''
+    if (item.type === 'Rate') {
+      formData.value[item.field] = 1
+    }
   })
   emit('register', formData.value)
 })
