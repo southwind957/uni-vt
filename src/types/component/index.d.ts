@@ -2,31 +2,14 @@ type FormDataType = {
   [key in string]: string | number
 }
 
-interface baseOption {
-  id: string | number
+interface originPicker {
+  id: number
   name: string
 }
 
-interface originPicker extends baseOption {
-  [key in string]: any
-}
-
-type IFormType =
-  | 'Number'
-  | 'Input'
-  | 'Password'
-  | 'Picker'
-  | 'InputAddress'
-  | 'Checkbox'
-  | 'Rate'
-  | 'Switch'
-  | 'Sign'
-  | 'Textarea'
-
-interface INumberProps {
-  min?: number
-  max?: number
-  step?: number
+interface optionSchema extends originPicker {
+  id: number
+  name: string
 }
 
 interface IPickerProps<T extends baseOption> {
@@ -36,14 +19,14 @@ interface IPickerProps<T extends baseOption> {
 
 type itemProps<T extends baseOption> = INumberProps | IPickerProps<T>
 
-interface IFormSchema<T = any> {
+interface IFormSchema<
+  T extends keyof FormItemPropsMap = keyof FormItemPropsMap
+> {
+  type: T
   label: string
   field: string
-  suffixIcon?: string
-  placeholder: string
   cell?: string
-  type: IFormType
-  formItemProps?: itemProps<T>
+  formItemProps?: FormItemPropsMap[T]
 }
 
 interface SharePlatform {

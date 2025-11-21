@@ -47,8 +47,8 @@
             v-model="formData[item.field]"
           />
           <wd-picker
-            :columns="getNames(item)"
             v-if="item.type === 'Picker'"
+            :columns="getNames(item as IFormSchema<'Picker'>)"
             v-model="formData[item.field]"
           />
           <wd-textarea
@@ -86,7 +86,11 @@
           />
           <wd-signature
             v-if="item.type === 'Sign'"
-            :export-scale="2"
+            :export-scale="
+              hasKeys(item.formItemProps, ['exportScale'])
+                ? item.formItemProps.exportScale
+                : 2
+            "
             :background-color="
               hasKeys(item.formItemProps, ['backgroundColor'])
                 ? item.formItemProps.backgroundColor
@@ -112,15 +116,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type PropType, onMounted } from 'vue'
+import { ref, type PropType, onMounted, computed } from 'vue'
 import { groupBy } from '@/utils/others'
 import { hasKeys } from '@/utils/typeFunc'
 import { uploadFile } from '@/utils/unifunc'
 
 const emit = defineEmits(['register', 'submitForm'])
 
+// 每个field单独保存
+const pickerNames = ref<Record<string, string[]>>({})
 // 保留原数组，为了兼容wot-design的picker组件,泛型为T
-const originalFormSchema = ref<originPicker[]>([])
+const originalRaw = ref<Record<string, originPicker[]>>({})
 // wot-design的签名组件图片
 const img = ref<Partial<any>>({})
 
@@ -138,28 +144,37 @@ const props = defineProps({
 
 const formData = ref<FormDataType>({})
 
-const schemaList = groupBy(props.formSchema, (item) => item.cell as string)
+const schemaList = computed(() =>
+  groupBy(props.formSchema, (item) => item.cell as string)
+)
 
 // 处理函数开始
 // 选择
-const getNames = (item: IFormSchema<originPicker>) => {
-  //  如果传递了options,返回options的name
-  const options = ref<string[]>([])
+const getNames = (item: IFormSchema<'Picker'>) => {
+  const field = item.field
   const formItem = item.formItemProps
-  if (formItem && hasKeys(formItem, ['options'])) {
-    options.value = formItem?.options.map((item: string) => item)
+
+  // 如果已经加载过,直接返回
+  if (pickerNames.value[field]) {
+    return pickerNames.value[field]
   }
-  if (formItem && hasKeys(formItem, ['optionApi'])) {
+
+  if (formItem?.options) {
+    pickerNames.value[field] = formItem.options
+    return pickerNames.value[field]
+  }
+  if (formItem?.optionApi) {
+    pickerNames.value[field] = []
     // 先执行一下传递过来的请求
     formItem.optionApi().then((res: IResponse<IList<originPicker>>) => {
-      originalFormSchema.value = res.data.items
+      originalRaw.value[field] = res.data.items
       //  处理一下options的格式, 为了兼容wot-design的picker组件
-      originalFormSchema.value.forEach((item) => {
-        options.value.push(item.name)
-      })
+      pickerNames.value[field] = res.data.items.map((i) => i.name)
     })
-    return options.value
+    return pickerNames.value[field]
   }
+
+  return []
 }
 
 // 签名
@@ -192,7 +207,8 @@ const submitForm = () => {
       formData.value[item.field] = img.value.url
     }
     if (item.type === 'Picker') {
-      formData.value[item.field] = originalFormSchema.value.find(
+      const raw = originalRaw.value[item.field] || []
+      formData.value[item.field] = raw.find(
         (i) => i.name === formData.value[item.field]
       )?.id as number
     }

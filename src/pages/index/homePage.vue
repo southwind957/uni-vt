@@ -221,42 +221,51 @@ const schema = ref<IFormSchema[]>([
     field: 'name',
     label: '用户名',
     type: 'Input',
-    placeholder: '请输入用户名',
-    cell: '基础数据'
+    cell: '基础数据',
+    formItemProps: {
+      placeholder: '请输入用户名'
+    }
   },
   {
     field: 'password',
     label: '密码',
     type: 'Password',
-    placeholder: '请输入密码',
-    cell: '基础数据'
+    cell: '基础数据',
+    formItemProps: {
+      placeholder: '请输入密码'
+    }
   },
   {
     field: 'phone',
     label: '手机号',
     type: 'Input',
-    placeholder: '请输入手机号',
-    cell: '扩展数据'
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请输入手机号'
+    }
   },
   {
     field: 'price',
     label: '价格',
     type: 'Number',
-    placeholder: '请输入价格',
-    cell: '扩展数据'
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请输入价格'
+    }
   },
   {
     field: 'sign',
     label: '签名',
     type: 'Sign',
-    placeholder: '请签名',
-    cell: '扩展数据'
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请签名'
+    }
   },
   {
     field: 'gender',
     label: '性别',
     type: 'Picker',
-    placeholder: '请选择性别',
     cell: '扩展数据',
     formItemProps: {
       optionApi: () => getTestData()
@@ -266,8 +275,10 @@ const schema = ref<IFormSchema[]>([
     field: 'star',
     label: '星级',
     type: 'Rate',
-    placeholder: '请选择星级',
-    cell: '扩展数据'
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请选择星级'
+    }
   }
 ])
 
