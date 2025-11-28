@@ -43,6 +43,12 @@
       "style": {
         "navigationBarTitleText": "ai测试"
       }
+    },
+    {
+      "path": "pages/test/ImTest",
+      "style": {
+        "navigationBarTitleText": "im测试"
+      }
     }
   ],
   "globalStyle": {

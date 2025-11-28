@@ -27,6 +27,7 @@
       <wd-button @click="toLayout">layout测试</wd-button>
       <wd-button @click="changeTheme">切换主题色(scss)</wd-button>
       <wd-button @click="toAi">ai测试</wd-button>
+      <wd-button @click="toIm">im测试</wd-button>
     </view>
     <view class="mt-10 mb-10">
       <text>语言切换测试</text>
@@ -145,6 +146,13 @@ const changeTheme = () => {
 const toAi = () => {
   uni.navigateTo({
     url: '/pages/test/llmPage'
+  })
+}
+
+// im测试
+const toIm = () => {
+  uni.navigateTo({
+    url: '/pages/test/ImTest'
   })
 }
 
