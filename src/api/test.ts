@@ -20,3 +20,26 @@ export const PostItemsAi = (text: string) => {
     text
   })
 }
+
+// 返回测试数据，不用请求，直接promise模拟
+export const getTestData = () => {
+  return new Promise<any>((resolve) => {
+    setTimeout(() => {
+      resolve({
+        statusCode: 200,
+        data: {
+          items: [
+            {
+              id: 1,
+              name: '男'
+            },
+            {
+              id: 2,
+              name: '女'
+            }
+          ]
+        }
+      })
+    }, 1000)
+  })
+}

@@ -1,12 +1,32 @@
-type IFormType = 'Number' | 'Input' | 'Password'
+type FormDataType = {
+  [key in string]: string | number
+}
 
-interface IFormSchema {
+interface originPicker {
+  id: number
+  name: string
+}
+
+interface optionSchema extends originPicker {
+  id: number
+  name: string
+}
+
+interface IPickerProps<T extends baseOption> {
+  options?: string[]
+  optionApi?: () => Promise<T[]>
+}
+
+type itemProps<T extends baseOption> = INumberProps | IPickerProps<T>
+
+interface IFormSchema<
+  T extends keyof FormItemPropsMap = keyof FormItemPropsMap
+> {
+  type: T
   label: string
   field: string
-  suffixIcon?: string
-  placeholder: string
   cell?: string
-  type: IFormType
+  formItemProps?: FormItemPropsMap[T]
 }
 
 interface SharePlatform {

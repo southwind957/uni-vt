@@ -35,6 +35,7 @@
         @click="doSubmit"
         >不影响正常逻辑</TrackButton
       >
+      <wd-button @click="toIm">im测试</wd-button>
     </view>
     <view class="mt-10 mb-10">
       <text>语言切换测试</text>
@@ -105,7 +106,7 @@ import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useI18n } from 'vue-i18n'
 import useStore from '@/store/index'
-import { getItems, PostItems } from '@/api/test'
+import { getItems, getTestData, PostItems } from '@/api/test'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 import From from '@/components/Form/FormComponent.vue'
@@ -163,6 +164,13 @@ const toAi = () => {
 const doSubmit = () => {
   // 测试自动埋点
   console.log('测试自动埋点')
+}
+
+// im测试
+const toIm = () => {
+  uni.navigateTo({
+    url: '/pages/test/ImTest'
+  })
 }
 
 // 扫描二维码
@@ -238,29 +246,64 @@ const schema = ref<IFormSchema[]>([
     field: 'name',
     label: '用户名',
     type: 'Input',
-    placeholder: '请输入用户名',
-    cell: '基础数据'
+    cell: '基础数据',
+    formItemProps: {
+      placeholder: '请输入用户名'
+    }
   },
   {
     field: 'password',
     label: '密码',
     type: 'Password',
-    placeholder: '请输入密码',
-    cell: '基础数据'
+    cell: '基础数据',
+    formItemProps: {
+      placeholder: '请输入密码'
+    }
   },
   {
     field: 'phone',
     label: '手机号',
     type: 'Input',
-    placeholder: '请输入手机号',
-    cell: '扩展数据'
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请输入手机号'
+    }
   },
   {
     field: 'price',
     label: '价格',
     type: 'Number',
-    placeholder: '请输入价格',
-    cell: '扩展数据'
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请输入价格'
+    }
+  },
+  {
+    field: 'sign',
+    label: '签名',
+    type: 'Sign',
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请签名'
+    }
+  },
+  {
+    field: 'gender',
+    label: '性别',
+    type: 'Picker',
+    cell: '扩展数据',
+    formItemProps: {
+      optionApi: () => getTestData()
+    }
+  },
+  {
+    field: 'star',
+    label: '星级',
+    type: 'Rate',
+    cell: '扩展数据',
+    formItemProps: {
+      placeholder: '请选择星级'
+    }
   }
 ])
 

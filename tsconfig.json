@@ -7,7 +7,7 @@
       "@/*": ["./src/*"]
     },
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types", "uview-plus/types"]
+    "types": ["@dcloudio/types", "wot-design-uni"]
   },
   "include": [
     "src/types/**/*.d.ts",
