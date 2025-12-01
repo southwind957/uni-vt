@@ -1,4 +1,4 @@
-import { bus } from './eventBus'
+import { bus } from '../event/eventBus'
 import { ref } from 'vue'
 
 export interface IMOptions {

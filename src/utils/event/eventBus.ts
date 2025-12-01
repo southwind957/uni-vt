@@ -6,7 +6,8 @@ class EventBus {
 
   // 订阅事件
   on(event: string, handler: Handler) {
-    console.log('添加订阅事件:', event, handler)
+    console.log('订阅事件:', event, handler)
+
     const handlers = this.eventMap.get(event) || []
     handlers.push(handler)
     this.eventMap.set(event, handlers)
@@ -24,14 +25,7 @@ class EventBus {
 
   // 触发事件
   emit(event: string, ...args: any[]) {
-    console.log('事件映射:', this.eventMap)
-
-    console.log(this.eventMap.get(event))
-
-    console.log('触发事件:', event, ...args)
     const handlers = this.eventMap.get(event) || []
-    console.log('事件处理函数:', handlers)
-
     handlers.forEach((handler) => handler(...args))
   }
 }
