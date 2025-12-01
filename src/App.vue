@@ -10,7 +10,7 @@ import useStore from '@/store/index'
 import { createIM } from '@/utils/im/imCore'
 
 const im = createIM({
-  url: import.meta.env.VITE_APP_AI_IMG_URL,
+  url: import.meta.env.VITE_APP_IM_URL,
   userId: 'userA'
 })
 
