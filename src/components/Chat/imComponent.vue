@@ -71,7 +71,7 @@ const scrollTo = ref('')
 
 const offChat = bus.on('im:recv', (msg) => {
   msgList.value.push({
-    text: msg?.original?.content,
+    text: msg?.content,
     self: false,
     avatar: '/static/logo.png'
   })
@@ -82,7 +82,7 @@ function sendMsg() {
   bus.emit('chat:send', {
     type: 'chat',
     from: 'userA',
-    to: 'userB',
+    to: 'patient',
     content: input.value,
     time: Date.now()
   })
