@@ -49,6 +49,12 @@
       "style": {
         "navigationBarTitleText": "im测试"
       }
+    },
+    {
+      "path": "pages/test/tsetCommand",
+      "style": {
+        "navigationBarTitleText": "测试指令"
+      }
     }
   ],
   "globalStyle": {

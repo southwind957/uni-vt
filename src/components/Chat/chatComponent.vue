@@ -57,7 +57,7 @@
 <script setup lang="ts">
 import { ref, nextTick, getCurrentInstance } from 'vue'
 import { getContentHeight } from '@/utils/unifunc'
-import { PostItemsAi } from '@/api/test'
+import { PostItemsAi } from '@/api/test.api'
 
 const instance = getCurrentInstance()
 

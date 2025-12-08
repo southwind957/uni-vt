@@ -27,6 +27,7 @@
       <wd-button @click="toLayout">layout测试</wd-button>
       <wd-button @click="changeTheme">切换主题色(scss)</wd-button>
       <wd-button @click="toAi">ai测试</wd-button>
+      <wd-button @click="toTestCommand">测试指令</wd-button>
       <TrackButton event="btn_only_track">只埋点</TrackButton>
       <TrackButton
         type="primary"
@@ -106,7 +107,7 @@ import { ref, computed } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useI18n } from 'vue-i18n'
 import useStore from '@/store/index'
-import { getItems, getTestData, PostItems } from '@/api/test'
+import { getItems, getTestData, PostItems } from '@/api/test.api'
 // 引入瀑布流组件
 import Waterfall from '@/components/Waterfall/WaterfallComponent.vue'
 import From from '@/components/Form/FormComponent.vue'
@@ -122,6 +123,7 @@ import { openPdf } from '@/utils/others'
 import { useScanCode, usePreviewImage } from '@/utils/unifunc'
 import { useLang } from '@/hooks/useLang'
 import { track } from '@/utils/tracks'
+import { runAICommand } from '@/ai/engin.ai'
 const { useSafeArea } = useStore()
 
 console.log('========>', useSafeArea.getSafeAreaTop)
@@ -137,6 +139,15 @@ const { t } = useI18n()
 
 function changeLang() {
   setLang(currentLang.value === 'zh' ? 'en' : 'zh')
+}
+
+function toTestCommand() {
+  const cmd: AICommand = {
+    action: 'navigate',
+    path: '/pages/test/tsetCommand'
+  }
+
+  runAICommand(cmd)
 }
 
 // layout测试

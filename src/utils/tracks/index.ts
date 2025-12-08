@@ -1,4 +1,4 @@
-import { trackData } from '@/api/track'
+import { trackData } from '@/api/track.api'
 
 const BUFFER_MAX = 10
 const MAX_INTERVAL = 5000
