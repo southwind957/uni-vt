@@ -58,6 +58,7 @@
 import { ref, nextTick, getCurrentInstance } from 'vue'
 import { getContentHeight } from '@/utils/unifunc'
 import { PostItemsAi } from '@/api/test.api'
+import { runAICommand } from '@/ai/engin.ai'
 
 const instance = getCurrentInstance()
 
@@ -76,10 +77,16 @@ const userAvatar = uni.getStorageSync('userAvatar') || '/static/logo.png'
 const fakeAiReply = async (msg: string): Promise<string> => {
   try {
     loading.value = true
-    const res = await PostItemsAi(msg)
+    const res: AICommand = await PostItemsAi(msg)
     console.log('PostItemsAi', res)
-    const result = res.choices[0].message.content
-    return result
+
+    if (res.type === 'chat' && 'query' in res) {
+      const result = res.query
+      return result
+    } else {
+      runAICommand(res)
+      return '操作成功'
+    }
   } catch (error) {
     console.log('error', error)
     loading.value = false

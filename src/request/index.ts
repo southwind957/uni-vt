@@ -54,7 +54,7 @@ export const alovaInst = createAlova({
 })
 
 export const alovaAiInst = createAlova({
-  baseURL: BASE_AI_URL,
+  baseURL: `${BASE_AI_URL}`,
   timeout: 15000,
   ...uniappAdapter(),
   beforeRequest: (method) => {
@@ -63,37 +63,14 @@ export const alovaAiInst = createAlova({
     method.config.headers = {
       ...method.config.headers,
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_APP_AI_KEY}`,
-      appid: import.meta.env.VITE_APP_AI_APP_ID
-    }
-    const { text } = method.data
-    // 百度千帆
-    method.data = {
-      model: import.meta.env.VITE_APP_AI_MODEL,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'text',
-              text
-            }
-          ]
-        }
-      ],
-      web_search: {
-        enable: false,
-        enable_citation: false,
-        enable_trace: false
-      },
-      plugin_options: {}
+      Authorization: `Bearer ${import.meta.env.VITE_APP_AI_KEY}`
     }
   },
   responded: {
     onSuccess: (response: any) => {
       const { data } = response
-      console.log('data', data)
-      return data
+      const message: AICommand = JSON.parse(data.answer)
+      return message
     },
     onError: (err) => {
       console.log('err', err)

@@ -16,8 +16,12 @@ export const PostItems = () => {
 }
 
 export const PostItemsAi = (text: string) => {
-  return alovaAiInst.Post<any>('/chat/completions', {
-    text
+  return alovaAiInst.Post<any>('/chat-messages', {
+    query: text,
+    response_mode: 'blocking',
+    user: 'test-user',
+    inputs: {},
+    files: []
   })
 }
 

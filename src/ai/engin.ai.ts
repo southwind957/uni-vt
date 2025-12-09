@@ -1,5 +1,7 @@
 // 执行AI命令
 export function runAICommand(cmd: AICommand) {
+  console.log('runAICommand', cmd)
+
   if (!cmd || !cmd.action) {
     console.warn('AI指令无效:', cmd)
     return
@@ -7,7 +9,7 @@ export function runAICommand(cmd: AICommand) {
 
   switch (cmd.action) {
     case 'navigate':
-      uni.navigateTo({ url: cmd.path })
+      uni.navigateTo({ url: cmd.target })
       break
 
     case 'fill':

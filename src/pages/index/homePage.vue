@@ -144,7 +144,7 @@ function changeLang() {
 function toTestCommand() {
   const cmd: AICommand = {
     action: 'navigate',
-    path: '/pages/test/tsetCommand'
+    target: '/pages/test/tsetCommand'
   }
 
   runAICommand(cmd)
